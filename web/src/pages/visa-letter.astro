@@ -1,0 +1,230 @@
+---
+import Base from '~/layouts/Base.astro';
+
+const subject = encodeURIComponent('PGConf Poland 2026 — Visa invitation letter request');
+const body = encodeURIComponent(
+  [
+    'Hello PGConf Poland team,',
+    '',
+    'I am writing to request an invitation letter for my visa application.',
+    '',
+    'Full legal name (as on passport):',
+    'Date of birth (DD-MM-YYYY):',
+    'Nationality:',
+    'Passport number:',
+    'Passport expiry date:',
+    'Postal address:',
+    'Conference registration confirmation number:',
+    'Embassy or consulate (name and city):',
+    '',
+    'Thank you.',
+  ].join('\n')
+);
+
+const faq = [
+  {
+    q: 'Who needs a visa to enter Poland?',
+    a: "Poland is in the Schengen Area. Citizens of EU/EEA countries, the UK, USA, Canada, Japan, and many others may enter for short stays without a visa. Travellers from countries that require a Schengen visa will need one to attend the conference. The official list is maintained by the Polish Ministry of Foreign Affairs — please check there for the most current information.",
+  },
+  {
+    q: 'Can PGConf Poland help me with my visa application?',
+    a: "Yes — for accepted speakers and registered, paid attendees, we will issue an official invitation letter on PGConf Poland letterhead, signed by a member of the organising committee, suitable for inclusion in your visa application.",
+  },
+  {
+    q: 'What information do you need from me?',
+    a: 'To prepare the letter we need: your full legal name exactly as printed on your passport, your date of birth, nationality, passport number and expiry date, postal address, your conference registration confirmation number, and the name and city of the embassy or consulate where you will apply.',
+  },
+  {
+    q: 'How long does it take?',
+    a: 'We aim to issue the letter within 14 days of receiving your complete request. If your appointment is sooner, please say so in your email — we will do our best to prioritise.',
+  },
+  {
+    q: 'When should I request the letter?',
+    a: 'As early as possible, and definitely once your registration is paid. Schengen visa appointments often need to be booked weeks in advance — leave yourself plenty of time.',
+  },
+  {
+    q: 'In what format will I receive the letter?',
+    a: 'A signed PDF by email. If your embassy specifically requires a paper original, write to us — we will arrange to post one for the cost of postage.',
+  },
+  {
+    q: 'My visa was refused. Can I get a refund?',
+    a: 'Yes. If your visa is refused despite a complete and timely application, we will refund your conference ticket in full on production of the refusal notice. Email visa@pgconf.pl with your registration number.',
+  },
+];
+---
+
+<Base
+  title="Visa Letter — PGConf Poland 2026"
+  description="How to request an invitation letter for a Polish Schengen visa to attend PGConf Poland 2026 in Gdańsk."
+>
+  <section class="section">
+    <div class="container container--narrow">
+      <p class="eyebrow">Travel</p>
+      <h1 class="display-headline">Visa invitation letters.</h1>
+      <p class="lede">
+        If you need a visa to travel to Poland for PGConf Poland 2026, we can issue
+        an official invitation letter to support your application. The process is
+        simple — read on, then email us.
+      </p>
+      <div class="rule"></div>
+
+      <div class="cta-row">
+        <a href={`mailto:visa@pgconf.pl?subject=${subject}&body=${body}`} class="btn btn--primary">
+          Request a letter
+        </a>
+        <p class="cta-note">Opens your email client with the required fields prefilled.</p>
+      </div>
+
+      <dl class="faq">
+        {faq.map((item, i) => (
+          <div class="faq-item" style={`--idx:${i}`}>
+            <dt class="faq-q">{item.q}</dt>
+            <dd class="faq-a">{item.a}</dd>
+          </div>
+        ))}
+      </dl>
+
+      <div class="contact-box">
+        <p class="contact-box__label">Visa correspondence</p>
+        <p class="contact-box__email">
+          <a href={`mailto:visa@pgconf.pl?subject=${subject}&body=${body}`}>visa@pgconf.pl</a>
+        </p>
+        <p class="contact-box__note">
+          Please include all the information listed above in your first email — it lets us
+          turn the letter around quickly. Replies usually within five working days, with the
+          finished letter within fourteen.
+        </p>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .eyebrow {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: var(--ls-eyebrow);
+    font-size: var(--fs-xs);
+    color: var(--color-gold);
+    margin: 0 0 var(--space-4);
+  }
+  .display-headline {
+    font-family: var(--font-display);
+    font-size: var(--fs-4xl);
+    font-weight: 400;
+    color: var(--color-fg-strong);
+    margin: 0 0 var(--space-6);
+    line-height: var(--lh-tight);
+    letter-spacing: var(--ls-tight);
+  }
+  .lede {
+    font-family: var(--font-display);
+    font-size: var(--fs-xl);
+    color: var(--color-fg);
+    line-height: var(--lh-snug);
+    margin: 0 0 var(--space-8);
+    font-weight: 300;
+    max-width: 60ch;
+  }
+  .rule {
+    width: 80px; height: 2px;
+    background: linear-gradient(90deg, var(--color-gold), transparent);
+    margin: 0 0 var(--space-10);
+  }
+
+  .cta-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-4) var(--space-6);
+    padding: var(--space-6);
+    background: var(--color-bg-elev);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-12);
+  }
+  .cta-note {
+    color: var(--color-fg-muted);
+    font-size: var(--fs-sm);
+    margin: 0;
+  }
+  .btn {
+    display: inline-flex;
+    padding: var(--space-4) var(--space-8);
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: var(--ls-wide);
+    font-size: var(--fs-sm);
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    background: var(--color-red);
+    color: var(--color-fg-strong);
+    border: 1px solid transparent;
+    transition: transform var(--dur-fast), box-shadow var(--dur-base);
+  }
+  .btn--primary:hover { background: var(--color-red-deep); box-shadow: var(--shadow-red-glow); transform: translateY(-1px); }
+
+  .faq {
+    margin: 0 0 var(--space-12);
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    border-top: 1px solid var(--color-border-cool);
+  }
+  .faq-item {
+    padding: var(--space-6) 0;
+    border-bottom: 1px solid var(--color-border-cool);
+    display: grid;
+    grid-template-columns: 32px 1fr;
+    gap: var(--space-2) var(--space-5);
+  }
+  .faq-item::before {
+    content: counter(faq-counter, decimal-leading-zero);
+    counter-increment: faq-counter;
+    font-family: var(--font-mono);
+    color: var(--color-gold);
+    font-size: var(--fs-sm);
+    grid-row: 1 / span 2;
+    padding-top: 0.4em;
+  }
+  .faq { counter-reset: faq-counter; }
+  .faq-q {
+    font-family: var(--font-display);
+    font-size: var(--fs-xl);
+    font-weight: 500;
+    color: var(--color-fg-strong);
+    line-height: var(--lh-snug);
+    margin: 0;
+  }
+  .faq-a {
+    color: var(--color-fg-muted);
+    line-height: var(--lh-base);
+    margin: 0;
+    font-family: var(--font-sans);
+  }
+
+  .contact-box {
+    background: var(--color-bg-sunken);
+    border: 1px solid var(--color-border);
+    border-left: 3px solid var(--color-gold);
+    border-radius: var(--radius-md);
+    padding: var(--space-8);
+  }
+  .contact-box__label {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: var(--ls-eyebrow);
+    font-size: var(--fs-xs);
+    color: var(--color-gold);
+    margin: 0 0 var(--space-3);
+  }
+  .contact-box__email {
+    font-family: var(--font-display);
+    font-size: var(--fs-2xl);
+    margin: 0 0 var(--space-4);
+  }
+  .contact-box__email a { color: var(--color-fg-strong); text-decoration: none; border-bottom: 1px solid var(--color-gold); }
+  .contact-box__email a:hover { color: var(--color-gold); }
+  .contact-box__note { color: var(--color-fg-muted); margin: 0; line-height: var(--lh-base); font-size: var(--fs-sm); }
+</style>

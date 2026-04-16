@@ -1,0 +1,106 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import Header from '~/components/Header.astro';
+import Footer from '~/components/Footer.astro';
+import { CONFERENCE } from '~/lib/conference';
+import '~/styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string;
+  bodyClass?: string;
+}
+
+const {
+  title,
+  description = CONFERENCE.description,
+  ogImage = '/og.png',
+  bodyClass = '',
+} = Astro.props;
+
+const fullTitle = title === CONFERENCE.name ? title : `${title} — ${CONFERENCE.name}`;
+const canonical = new URL(Astro.url.pathname, CONFERENCE.url).href;
+
+const eventLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Event',
+  name: CONFERENCE.name,
+  description: CONFERENCE.description,
+  startDate: CONFERENCE.startsAt,
+  endDate: CONFERENCE.endsAt,
+  eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+  eventStatus: 'https://schema.org/EventScheduled',
+  location: {
+    '@type': 'Place',
+    name: CONFERENCE.venue.name,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: CONFERENCE.venue.street,
+      postalCode: CONFERENCE.venue.postalCode,
+      addressLocality: CONFERENCE.venue.city,
+      addressCountry: CONFERENCE.venue.countryCode,
+    },
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: CONFERENCE.venue.latitude,
+      longitude: CONFERENCE.venue.longitude,
+    },
+  },
+  organizer: {
+    '@type': 'Organization',
+    name: CONFERENCE.organiser.name,
+    url: CONFERENCE.organiser.url,
+  },
+  url: CONFERENCE.url,
+  image: new URL(ogImage, CONFERENCE.url).href,
+};
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#0a1428" />
+    <meta name="color-scheme" content="dark" />
+
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={CONFERENCE.name} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL(ogImage, CONFERENCE.url).href} />
+    <meta property="og:locale" content="en_GB" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL(ogImage, CONFERENCE.url).href} />
+
+    <!-- JSON-LD -->
+    <script type="application/ld+json" set:html={JSON.stringify(eventLd)} />
+
+    <ClientRouter />
+  </head>
+
+  <body class={bodyClass}>
+    <a href="#main" class="sr-only focus:not-sr-only">Skip to content</a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+    <div class="grain-overlay" aria-hidden="true"></div>
+  </body>
+</html>

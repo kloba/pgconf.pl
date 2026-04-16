@@ -1,0 +1,248 @@
+---
+/**
+ * MobileNav — vanilla TS island (no framework needed).
+ * Markup is server-rendered; client behaviour is added by an inline module script
+ * that runs on every page load + after Astro view transitions.
+ *
+ * Full-screen overlay nav with staggered link reveals.
+ */
+import { CONFERENCE } from '~/lib/conference';
+
+interface Props {
+  items: ReadonlyArray<{ href: string; label: string }>;
+}
+const { items } = Astro.props;
+---
+<button
+  type="button"
+  class="mobile-nav-toggle"
+  aria-controls="mobile-nav"
+  aria-expanded="false"
+  aria-label="Open menu"
+  data-mobile-nav-trigger
+>
+  <span aria-hidden="true"></span>
+  <span aria-hidden="true"></span>
+  <span aria-hidden="true"></span>
+</button>
+
+<div id="mobile-nav" class="mobile-nav" data-mobile-nav hidden>
+  <div class="mobile-nav__bg" aria-hidden="true"></div>
+  <button
+    type="button"
+    class="mobile-nav__close"
+    aria-label="Close menu"
+    data-mobile-nav-close
+  >
+    <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+      <path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+    </svg>
+  </button>
+
+  <nav class="mobile-nav__inner" aria-label="Mobile primary">
+    <p class="eyebrow mobile-nav__eyebrow">{CONFERENCE.dateLabel} · {CONFERENCE.venue.city}</p>
+    <ul>
+      {items.map((item, i) => (
+        <li style={`--i:${i}`}>
+          <a href={item.href} class="mobile-nav__link" data-mobile-nav-link>{item.label}</a>
+        </li>
+      ))}
+    </ul>
+    <div class="mobile-nav__foot">
+      <a href={`mailto:${CONFERENCE.contactEmail}`} class="link-reveal">{CONFERENCE.contactEmail}</a>
+    </div>
+  </nav>
+</div>
+
+<style>
+  .mobile-nav-toggle {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 44px; height: 44px;
+    padding: 10px;
+    border-radius: var(--radius-sm);
+    color: var(--color-fg);
+    transition: color var(--dur-fast) var(--ease-out-quart);
+  }
+  @media (min-width: 1024px) {
+    .mobile-nav-toggle { display: none; }
+  }
+  .mobile-nav-toggle span {
+    display: block;
+    height: 1.5px;
+    background: currentColor;
+    transition: transform var(--dur-base) var(--ease-out-quart),
+                opacity var(--dur-fast) var(--ease-out-quart);
+    transform-origin: center;
+  }
+  .mobile-nav-toggle span:nth-child(1) { width: 22px; }
+  .mobile-nav-toggle span:nth-child(2) { width: 18px; margin-left: auto; }
+  .mobile-nav-toggle span:nth-child(3) { width: 22px; }
+  .mobile-nav-toggle:hover { color: var(--color-gold); }
+
+  .mobile-nav-toggle[aria-expanded="true"] span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .mobile-nav-toggle[aria-expanded="true"] span:nth-child(2) {
+    opacity: 0;
+  }
+  .mobile-nav-toggle[aria-expanded="true"] span:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+
+  /* Overlay panel */
+  .mobile-nav {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-nav);
+    display: flex;
+    align-items: stretch;
+    justify-content: stretch;
+  }
+  .mobile-nav[hidden] { display: none; }
+
+  .mobile-nav__bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 80% 20%, rgba(212,169,58,0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 80% 70% at 20% 90%, rgba(216,35,42,0.10) 0%, transparent 65%),
+      var(--color-bg-overlay);
+    opacity: 0;
+    transition: opacity var(--dur-base) var(--ease-out-quart);
+  }
+  .mobile-nav.is-open .mobile-nav__bg { opacity: 1; }
+
+  .mobile-nav__close {
+    position: absolute;
+    top: var(--space-4);
+    right: var(--space-4);
+    width: 44px; height: 44px;
+    color: var(--color-fg);
+    border-radius: 50%;
+    border: 1px solid var(--color-border);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: color var(--dur-fast) var(--ease-out-quart),
+                border-color var(--dur-fast) var(--ease-out-quart);
+  }
+  .mobile-nav__close:hover {
+    color: var(--color-gold);
+    border-color: var(--color-gold);
+  }
+
+  .mobile-nav__inner {
+    position: relative;
+    margin: auto;
+    padding: var(--space-12) var(--section-pad-x);
+    width: 100%;
+    max-width: 540px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+  .mobile-nav__eyebrow {
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity var(--dur-base) var(--ease-out-quart),
+                transform var(--dur-base) var(--ease-out-quart);
+    transition-delay: 100ms;
+  }
+  .mobile-nav.is-open .mobile-nav__eyebrow {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .mobile-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    border-top: 1px solid var(--color-border-cool);
+  }
+  .mobile-nav li {
+    border-bottom: 1px solid var(--color-border-cool);
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity var(--dur-slow) var(--ease-out-expo),
+                transform var(--dur-slow) var(--ease-out-expo);
+    transition-delay: calc(160ms + var(--i, 0) * 60ms);
+  }
+  .mobile-nav.is-open li {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .mobile-nav__link {
+    display: block;
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 1.2rem + 2vw, 2.4rem);
+    font-weight: 450;
+    font-variation-settings: 'opsz' 96, 'SOFT' 50;
+    color: var(--color-fg-strong);
+    padding: var(--space-3) 0;
+    transition: color var(--dur-fast) var(--ease-out-quart),
+                padding-inline-start var(--dur-base) var(--ease-out-quart);
+  }
+  .mobile-nav__link:hover {
+    color: var(--color-gold-bright);
+    padding-inline-start: var(--space-4);
+  }
+
+  .mobile-nav__foot {
+    margin-top: var(--space-6);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--color-border-cool);
+    font-family: var(--font-mono);
+    font-size: var(--fs-sm);
+    color: var(--color-fg-muted);
+    opacity: 0;
+    transition: opacity var(--dur-base) var(--ease-out-quart);
+    transition-delay: calc(160ms + 9 * 60ms);
+  }
+  .mobile-nav.is-open .mobile-nav__foot { opacity: 1; }
+</style>
+
+<script>
+  function setup() {
+    const trigger = document.querySelector<HTMLButtonElement>('[data-mobile-nav-trigger]');
+    const panel = document.querySelector<HTMLDivElement>('[data-mobile-nav]');
+    const close = document.querySelector<HTMLButtonElement>('[data-mobile-nav-close]');
+    const links = document.querySelectorAll<HTMLAnchorElement>('[data-mobile-nav-link]');
+    if (!trigger || !panel || !close) return;
+
+    const open = () => {
+      panel.hidden = false;
+      // next frame so transition runs
+      requestAnimationFrame(() => panel.classList.add('is-open'));
+      trigger.setAttribute('aria-expanded', 'true');
+      trigger.setAttribute('aria-label', 'Close menu');
+      document.body.style.overflow = 'hidden';
+    };
+    const closeMenu = () => {
+      panel.classList.remove('is-open');
+      trigger.setAttribute('aria-expanded', 'false');
+      trigger.setAttribute('aria-label', 'Open menu');
+      document.body.style.overflow = '';
+      // hide after transition
+      setTimeout(() => { panel.hidden = true; }, 320);
+    };
+
+    trigger.addEventListener('click', () => {
+      if (trigger.getAttribute('aria-expanded') === 'true') closeMenu();
+      else open();
+    });
+    close.addEventListener('click', closeMenu);
+    links.forEach((a) => a.addEventListener('click', closeMenu));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && trigger.getAttribute('aria-expanded') === 'true') closeMenu();
+    });
+  }
+
+  setup();
+  document.addEventListener('astro:after-swap', setup);
+</script>

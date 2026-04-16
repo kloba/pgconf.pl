@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://pgconf.pl/sitemap-index.xml

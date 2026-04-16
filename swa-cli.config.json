@@ -1,0 +1,16 @@
+{
+  "$schema": "https://aka.ms/azure/static-web-apps-cli/schema",
+  "configurations": {
+    "pgconf-pl": {
+      "appLocation": "web",
+      "apiLocation": "api",
+      "outputLocation": "dist",
+      "appBuildCommand": "pnpm --filter web build",
+      "apiBuildCommand": "pnpm --filter api build",
+      "appDevserverUrl": "http://localhost:4321",
+      "apiLanguage": "node",
+      "apiVersion": "20",
+      "run": "pnpm --filter web dev"
+    }
+  }
+}

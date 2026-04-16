@@ -1,0 +1,546 @@
+---
+import Base from '~/layouts/Base.astro';
+---
+
+<Base
+  title="Contact — PGConf Poland 2026"
+  description="Get in touch with the PGConf Poland 2026 organising team — general queries, sponsorship, programme committee, press."
+>
+  <section class="section section--hero">
+    <div class="container">
+      <p class="eyebrow">Contact</p>
+      <h1 class="page-title">Write to us — we read everything.</h1>
+      <p class="lede">
+        The fastest way to reach the right person is to use the form below and pick a category, but if
+        you prefer email, every inbox is listed too. Replies usually land within two working days; if
+        something is urgent, mention it in the subject line and we will prioritise.
+      </p>
+      <span class="rule rule--gold" aria-hidden="true"></span>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container grid grid--two">
+      <aside class="info">
+        <h2 class="info__title">By email</h2>
+        <span class="rule rule--gold rule--sm" aria-hidden="true"></span>
+        <dl class="contacts">
+          <div>
+            <dt>General</dt>
+            <dd><a href="mailto:hello@pgconf.pl">hello@pgconf.pl</a></dd>
+          </div>
+          <div>
+            <dt>Sponsorship</dt>
+            <dd><a href="mailto:sponsors@pgconf.pl">sponsors@pgconf.pl</a></dd>
+          </div>
+          <div>
+            <dt>Programme</dt>
+            <dd><a href="mailto:programme@pgconf.pl">programme@pgconf.pl</a></dd>
+          </div>
+        </dl>
+
+        <h2 class="info__title info__title--alt">Mailing address</h2>
+        <span class="rule rule--gold rule--sm" aria-hidden="true"></span>
+        <address class="postal">
+          PostgreSQL Europe<br />
+          61 rue de Lyon<br />
+          75012 Paris<br />
+          France
+        </address>
+
+        <h2 class="info__title info__title--alt">Social</h2>
+        <span class="rule rule--gold rule--sm" aria-hidden="true"></span>
+        <ul class="socials">
+          <li>
+            <a href="https://fosstodon.org/@pgconfpl" rel="me noopener" target="_blank">
+              <span class="socials__label">Mastodon</span>
+              <span class="socials__handle">@pgconfpl@fosstodon.org</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.linkedin.com/company/postgresql-europe/" rel="noopener" target="_blank">
+              <span class="socials__label">LinkedIn</span>
+              <span class="socials__handle">PostgreSQL Europe</span>
+            </a>
+          </li>
+        </ul>
+
+        <p class="hint">
+          Reporting a Code of Conduct concern? Use the dedicated channels on the
+          <a href="/code-of-conduct" class="link-arrow">Code of Conduct page</a> rather than this form.
+        </p>
+      </aside>
+
+      <div class="form-card">
+        <h2 class="form-card__title">Send a message</h2>
+        <span class="rule rule--gold rule--sm" aria-hidden="true"></span>
+
+        <form
+          id="contact-form"
+          class="form"
+          method="post"
+          action="/api/contact"
+          data-state="idle"
+          novalidate
+        >
+          <div class="field">
+            <label for="cf-name">Your name</label>
+            <input
+              id="cf-name"
+              name="name"
+              type="text"
+              required
+              minlength="2"
+              maxlength="120"
+              autocomplete="name"
+            />
+          </div>
+
+          <div class="field">
+            <label for="cf-email">Email</label>
+            <input
+              id="cf-email"
+              name="email"
+              type="email"
+              required
+              maxlength="200"
+              autocomplete="email"
+            />
+          </div>
+
+          <div class="field">
+            <label for="cf-org">Organisation <span class="optional">optional</span></label>
+            <input
+              id="cf-org"
+              name="organisation"
+              type="text"
+              maxlength="120"
+              autocomplete="organization"
+            />
+          </div>
+
+          <div class="field">
+            <label for="cf-category">Category</label>
+            <select id="cf-category" name="category" required>
+              <option value="general">General enquiry</option>
+              <option value="sponsorship">Sponsorship</option>
+              <option value="speaking">Speaking / Call for Papers</option>
+              <option value="venue">Venue, accessibility &amp; logistics</option>
+              <option value="press">Press</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="cf-subject">Subject</label>
+            <input
+              id="cf-subject"
+              name="subject"
+              type="text"
+              required
+              minlength="4"
+              maxlength="200"
+            />
+          </div>
+
+          <div class="field">
+            <label for="cf-message">Message</label>
+            <textarea
+              id="cf-message"
+              name="message"
+              required
+              minlength="20"
+              maxlength="4000"
+              rows="6"
+            ></textarea>
+            <p class="field__hint">Between 20 and 4000 characters.</p>
+          </div>
+
+          {/* Cloudflare Turnstile token. Production code injects a real token via the widget. */}
+          <input type="hidden" name="turnstileToken" value="" data-turnstile-token />
+
+          <div class="actions">
+            <button type="submit" class="btn btn--primary">
+              <span class="btn__label" data-label-idle>Send message</span>
+              <span class="btn__label" data-label-sending hidden>Sending…</span>
+              <span aria-hidden="true">→</span>
+            </button>
+          </div>
+
+          <p class="form__feedback" data-feedback role="status" aria-live="polite"></p>
+
+          <noscript>
+            <p class="form__noscript">
+              JavaScript is disabled — your message will be sent as a normal form post and you will be
+              redirected to a confirmation page.
+            </p>
+          </noscript>
+        </form>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script is:inline>
+  (function () {
+    const form = document.getElementById('contact-form');
+    if (!form) return;
+
+    const feedback = form.querySelector('[data-feedback]');
+    const labelIdle = form.querySelector('[data-label-idle]');
+    const labelSending = form.querySelector('[data-label-sending]');
+    const submit = form.querySelector('button[type="submit"]');
+    const tokenInput = form.querySelector('[data-turnstile-token]');
+
+    const setState = (state, message) => {
+      form.setAttribute('data-state', state);
+      if (feedback) {
+        feedback.textContent = message || '';
+        feedback.dataset.tone =
+          state === 'ok' ? 'ok' : state === 'error' ? 'error' : '';
+      }
+      if (labelIdle && labelSending) {
+        const sending = state === 'sending';
+        labelIdle.hidden = sending;
+        labelSending.hidden = !sending;
+      }
+      if (submit) submit.disabled = state === 'sending';
+    };
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      setState('sending', 'Sending your message…');
+
+      // In production a Turnstile widget populates this; until then keep a stub
+      // value so the request shape matches the contract.
+      if (tokenInput && !tokenInput.value) {
+        tokenInput.value = 'turnstile-pending';
+      }
+
+      const data = new FormData(form);
+      const payload = Object.fromEntries(data.entries());
+
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        if (!response.ok) {
+          let message = 'Something went wrong. Please try again, or email hello@pgconf.pl.';
+          try {
+            const body = await response.json();
+            if (body && typeof body.error === 'string') message = body.error;
+          } catch (_) {
+            /* ignore */
+          }
+          setState('error', message);
+          return;
+        }
+        form.reset();
+        setState('ok', 'Thank you — your message is in. We will reply within two working days.');
+      } catch (_) {
+        setState(
+          'error',
+          'We could not reach the server. Please check your connection or email hello@pgconf.pl directly.',
+        );
+      }
+    });
+  })();
+</script>
+
+<style>
+  .section {
+    padding-block: clamp(3.5rem, 7vw, 6rem);
+  }
+  .section--hero {
+    padding-block: clamp(5rem, 10vw, 8rem) clamp(2.5rem, 5vw, 4rem);
+  }
+  .container {
+    max-width: 72rem;
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 4vw, 2.5rem);
+  }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    margin: 0 0 1.25rem;
+  }
+  .page-title {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(2.5rem, 6vw, 4.25rem);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    margin: 0 0 1.5rem;
+    max-width: 22ch;
+  }
+  .lede {
+    font-size: clamp(1.075rem, 1.6vw, 1.25rem);
+    line-height: 1.55;
+    color: var(--color-fg-muted);
+    max-width: 60ch;
+    margin: 0 0 2rem;
+  }
+  .rule {
+    display: block;
+    height: 1px;
+    background: linear-gradient(90deg, var(--color-gold), transparent);
+    margin: 0.25rem 0 2rem;
+  }
+  .rule--gold {
+    width: 8rem;
+    background: linear-gradient(90deg, var(--color-gold), var(--color-gold-warm), transparent);
+    height: 2px;
+  }
+  .rule--sm {
+    width: 3.5rem;
+    margin-bottom: 1.25rem;
+  }
+  .grid {
+    display: grid;
+    gap: clamp(2rem, 4vw, 3.5rem);
+  }
+  .grid--two {
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 56rem) {
+    .grid--two {
+      grid-template-columns: 1fr 1.3fr;
+      align-items: start;
+    }
+  }
+  .info__title {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 1.25rem;
+    color: var(--color-fg);
+    margin: 0 0 0.5rem;
+  }
+  .info__title--alt {
+    margin-top: 2.25rem;
+  }
+  .contacts {
+    margin: 0 0 0.5rem;
+    display: grid;
+    gap: 0.75rem;
+  }
+  .contacts > div {
+    display: grid;
+    grid-template-columns: 7rem 1fr;
+    gap: 0.75rem;
+    align-items: baseline;
+  }
+  .contacts dt {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+  }
+  .contacts dd {
+    margin: 0;
+  }
+  .contacts a,
+  .socials a {
+    color: var(--color-fg);
+    text-decoration: none;
+    border-bottom: 1px solid color-mix(in oklab, var(--color-gold) 35%, transparent);
+    transition: color 160ms ease, border-color 160ms ease;
+  }
+  .contacts a:hover,
+  .socials a:hover {
+    color: var(--color-gold);
+    border-bottom-color: var(--color-gold);
+  }
+  .postal {
+    font-family: var(--font-mono);
+    font-style: normal;
+    font-size: 0.92rem;
+    line-height: 1.65;
+    color: var(--color-fg);
+    margin: 0;
+    padding-left: 1rem;
+    border-left: 2px solid var(--color-gold);
+  }
+  .socials {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.6rem;
+  }
+  .socials a {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    border-bottom: 0;
+  }
+  .socials__label {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+  }
+  .socials__handle {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--color-fg);
+  }
+  .hint {
+    margin-top: 2rem;
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--color-border);
+    background: var(--color-bg-elev);
+    font-size: 0.875rem;
+    color: var(--color-fg-muted);
+  }
+  .form-card {
+    border: 1px solid var(--color-border);
+    background: var(--color-bg-elev);
+    padding: clamp(1.5rem, 3vw, 2.25rem);
+    position: relative;
+  }
+  .form-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-top: 2px solid var(--color-gold);
+    pointer-events: none;
+  }
+  .form-card__title {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 1.5rem;
+    color: var(--color-fg);
+    margin: 0 0 0.5rem;
+  }
+  .form {
+    display: grid;
+    gap: 1.1rem;
+  }
+  .field {
+    display: grid;
+    gap: 0.4rem;
+  }
+  .field label {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+  }
+  .optional {
+    font-family: var(--font-mono);
+    color: var(--color-fg-muted);
+    font-size: 0.65rem;
+    margin-left: 0.4rem;
+    text-transform: none;
+    letter-spacing: 0.06em;
+  }
+  .field input,
+  .field select,
+  .field textarea {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    color: var(--color-fg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    padding: 0.7rem 0.85rem;
+    transition: border-color 160ms ease, box-shadow 160ms ease;
+    width: 100%;
+  }
+  .field textarea {
+    resize: vertical;
+    min-height: 8rem;
+    font-family: var(--font-sans);
+    line-height: 1.55;
+  }
+  .field select {
+    appearance: none;
+    background-image: linear-gradient(45deg, transparent 50%, var(--color-gold) 50%),
+      linear-gradient(135deg, var(--color-gold) 50%, transparent 50%);
+    background-position:
+      calc(100% - 18px) 50%,
+      calc(100% - 12px) 50%;
+    background-size: 6px 6px, 6px 6px;
+    background-repeat: no-repeat;
+    padding-right: 2.25rem;
+  }
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus {
+    outline: none;
+    border-color: var(--color-gold);
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--color-gold) 25%, transparent);
+  }
+  .field__hint {
+    font-size: 0.78rem;
+    color: var(--color-fg-muted);
+    margin: 0;
+  }
+  .actions {
+    margin-top: 0.5rem;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.85rem 1.4rem;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: 0.01em;
+    border: 1px solid var(--color-gold);
+    color: var(--color-bg);
+    background: var(--color-gold);
+    cursor: pointer;
+    transition: background 160ms ease, transform 160ms ease;
+  }
+  .btn:hover {
+    background: var(--color-gold-warm);
+    border-color: var(--color-gold-warm);
+    transform: translateY(-1px);
+  }
+  .btn:focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 3px;
+  }
+  .btn[disabled] {
+    opacity: 0.7;
+    cursor: progress;
+  }
+  .form__feedback {
+    margin: 0.25rem 0 0;
+    min-height: 1.25rem;
+    font-size: 0.92rem;
+    color: var(--color-fg-muted);
+  }
+  .form__feedback[data-tone='ok'] {
+    color: var(--color-gold);
+  }
+  .form__feedback[data-tone='error'] {
+    color: var(--color-red);
+  }
+  .form[data-state='ok'] {
+    /* slight visual confirmation alongside the message */
+    border-color: var(--color-gold);
+  }
+  .form__noscript {
+    font-size: 0.875rem;
+    color: var(--color-fg-muted);
+    margin: 0.5rem 0 0;
+  }
+  .link-arrow {
+    color: var(--color-gold);
+    text-decoration: none;
+    border-bottom: 1px solid color-mix(in oklab, var(--color-gold) 35%, transparent);
+  }
+  .link-arrow:hover {
+    border-bottom-color: var(--color-gold);
+  }
+</style>

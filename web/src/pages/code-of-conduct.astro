@@ -1,0 +1,263 @@
+---
+import Base from '~/layouts/Base.astro';
+---
+
+<Base
+  title="Code of Conduct — PGConf Poland 2026"
+  description="PGConf Poland 2026 follows the PostgreSQL Europe Code of Conduct. Read the full text and how to report concerns."
+>
+  <article class="coc">
+    <header class="coc-head">
+      <div class="container container--prose">
+        <p class="eyebrow">Conference policies</p>
+        <h1 class="coc-title">Code of Conduct</h1>
+        <p class="coc-lede">
+          PGConf Poland 2026 follows the PostgreSQL Europe Code of Conduct.
+          We are committed to providing a friendly, safe, and welcoming
+          environment for everyone — regardless of background, identity, or
+          experience level. This page summarises the policy in plain language
+          and explains how to report a concern.
+        </p>
+        <div class="rule"></div>
+      </div>
+    </header>
+
+    <div class="coc-body">
+      <div class="container container--prose">
+        <section>
+          <h2>Our commitment</h2>
+          <p>
+            PGConf Poland is dedicated to a harassment-free conference
+            experience for everyone. The conference team, speakers, sponsors,
+            and attendees are all expected to uphold this commitment for the
+            duration of the event — in talks, workshops, hallway conversations,
+            social events, and online channels associated with the conference.
+          </p>
+          <p>
+            This applies regardless of gender, gender identity and expression,
+            sexual orientation, disability, neurotype, physical appearance,
+            body size, race, ethnicity, age, religion, nationality, or
+            technical experience. We do not tolerate harassment of conference
+            participants in any form.
+          </p>
+        </section>
+
+        <section>
+          <h2>Unacceptable behaviour</h2>
+          <p>The following are examples of behaviour we will not tolerate:</p>
+          <ul>
+            <li>Offensive verbal comments or imagery related to the protected characteristics listed above.</li>
+            <li>Deliberate intimidation, stalking, or following — online or in person.</li>
+            <li>Harassing photography or recording of attendees or speakers without consent.</li>
+            <li>Sustained disruption of talks, workshops, or other events.</li>
+            <li>Inappropriate physical contact and unwelcome sexual attention.</li>
+            <li>Advocating for, or encouraging, any of the above behaviour.</li>
+            <li>Retaliation against anyone reporting a concern in good faith.</li>
+          </ul>
+          <p>
+            Sponsors, exhibitors, and recruiters are subject to the same
+            standard. Booth staff should not use sexualised imagery, clothing,
+            or activities. Hiring conversations are welcome; pressuring
+            attendees is not.
+          </p>
+        </section>
+
+        <section>
+          <h2>Reporting a concern</h2>
+          <p>
+            If you experience or witness behaviour that violates this Code of
+            Conduct, please tell us. You can:
+          </p>
+          <ul>
+            <li>
+              Email the PGConf Poland Code of Conduct team at
+              <a href="mailto:coc@pgconf.pl">coc@pgconf.pl</a>.
+            </li>
+            <li>
+              Speak to any member of the conference team in person — we will
+              be wearing identifiable badges and will be available throughout
+              the day at the registration desk.
+            </li>
+            <li>
+              If you would prefer to escalate to PostgreSQL Europe directly,
+              or if your concern involves a member of the local team, you can
+              email <a href="mailto:coc@postgresql.eu">coc@postgresql.eu</a>.
+            </li>
+          </ul>
+          <p>
+            Reports can be made anonymously, but providing contact details
+            allows us to follow up with you and gather any additional context
+            we need.
+          </p>
+        </section>
+
+        <section>
+          <h2>What happens after a report</h2>
+          <p>
+            Reports are read by a small Code of Conduct response team. We will
+            acknowledge your report quickly — usually the same day during the
+            conference, and within 48 hours at other times.
+          </p>
+          <p>
+            We will discuss the report with you, ask any clarifying questions,
+            and decide on an appropriate response. Possible responses include
+            a private conversation with the person involved, a formal warning,
+            removal from the event without refund, exclusion from future
+            PostgreSQL Europe events, and — where appropriate — referral to
+            local law enforcement.
+          </p>
+          <p>
+            We will respect the wishes of the reporter when deciding how to
+            proceed, to the extent possible while still keeping the wider
+            community safe.
+          </p>
+        </section>
+
+        <section>
+          <h2>Confidentiality</h2>
+          <p>
+            We treat all reports as confidential. Details of an incident will
+            only be shared with the small group of people necessary to handle
+            the response. We will not publish the names of either reporters
+            or the people reported about without their explicit consent,
+            except as required by law.
+          </p>
+          <p>
+            Aggregate, anonymised information about reports may be shared
+            with the wider PostgreSQL Europe board for the purposes of
+            improving the policy and running future events.
+          </p>
+        </section>
+
+        <section>
+          <h2>Scope</h2>
+          <p>
+            This Code of Conduct applies to the conference venue (ARCHE Dwór
+            Uphagena Gdańsk), all official social events, and all online
+            spaces associated with PGConf Poland 2026 — including the
+            conference website, mailing lists, chat channels, and any social
+            media accounts operated by the conference team.
+          </p>
+        </section>
+
+        <section>
+          <h2>Credit</h2>
+          <p>
+            This Code of Conduct is a faithful summary of, and adheres to, the
+            <a href="https://www.postgresql.eu/about/policies/coc/" target="_blank" rel="noopener noreferrer external">
+              PostgreSQL Europe Code of Conduct</a>, which itself draws on the
+            broader PostgreSQL Project Code of Conduct. Where there is any
+            ambiguity, the PostgreSQL Europe Code of Conduct is authoritative.
+          </p>
+        </section>
+
+        <div class="rule rule--center"></div>
+        <p class="signoff">
+          Questions about the policy? Email
+          <a href="mailto:coc@pgconf.pl">coc@pgconf.pl</a> or
+          <a href="mailto:coc@postgresql.eu">coc@postgresql.eu</a>.
+        </p>
+      </div>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .coc-head { padding: var(--section-pad-y) 0 var(--space-10); background: linear-gradient(180deg, var(--color-bg-sunken), var(--color-bg)); }
+  .container--prose { max-width: 65ch; margin-inline: auto; padding-inline: var(--section-pad-x); }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: var(--ls-eyebrow);
+    font-size: var(--fs-xs);
+    color: var(--color-gold);
+    margin: 0 0 var(--space-4);
+  }
+  .coc-title {
+    font-family: var(--font-display);
+    font-size: var(--fs-4xl);
+    font-weight: 400;
+    color: var(--color-fg-strong);
+    line-height: var(--lh-tight);
+    letter-spacing: var(--ls-tight);
+    margin: 0 0 var(--space-6);
+  }
+  .coc-lede {
+    font-family: var(--font-display);
+    font-size: var(--fs-xl);
+    color: var(--color-fg);
+    line-height: var(--lh-snug);
+    font-weight: 300;
+    margin: 0 0 var(--space-8);
+  }
+  .rule {
+    width: 100px; height: 2px;
+    background: linear-gradient(90deg, var(--color-gold), transparent);
+  }
+  .rule--center {
+    margin: var(--space-12) auto var(--space-6);
+    background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+  }
+
+  .coc-body { padding: var(--space-12) 0 var(--space-20); }
+
+  .coc-body section { margin-bottom: var(--space-12); }
+  .coc-body h2 {
+    font-family: var(--font-display);
+    font-size: var(--fs-2xl);
+    font-weight: 400;
+    color: var(--color-fg-strong);
+    margin: 0 0 var(--space-4);
+    line-height: var(--lh-snug);
+    letter-spacing: var(--ls-snug);
+  }
+  .coc-body h2::after {
+    content: '';
+    display: block;
+    width: 48px;
+    height: 1px;
+    background: var(--color-gold);
+    margin-top: var(--space-3);
+  }
+  .coc-body p, .coc-body li {
+    font-family: var(--font-sans);
+    color: var(--color-fg);
+    font-size: var(--fs-lg);
+    line-height: var(--lh-loose);
+  }
+  .coc-body p { margin: 0 0 var(--space-4); }
+  .coc-body ul {
+    padding-left: 0;
+    list-style: none;
+    margin: var(--space-2) 0 var(--space-6);
+  }
+  .coc-body li {
+    padding-left: var(--space-6);
+    position: relative;
+    margin-bottom: var(--space-3);
+  }
+  .coc-body li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.85em;
+    width: 12px;
+    height: 1px;
+    background: var(--color-gold);
+  }
+  .coc-body a {
+    color: var(--color-gold);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+  }
+  .coc-body a:hover { color: var(--color-gold-bright); }
+
+  .signoff {
+    text-align: center;
+    color: var(--color-fg-muted);
+    font-family: var(--font-mono);
+    font-size: var(--fs-sm);
+  }
+</style>

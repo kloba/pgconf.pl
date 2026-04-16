@@ -1,0 +1,14 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "FUNCTIONS_WORKER_RUNTIME": "node",
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "TURNSTILE_SECRET": "<your-secret>",
+    "MAILER_API_KEY": "<your-key>",
+    "MAILER_FROM": "hello@pgconf.pl",
+    "PROGRAM_COMMITTEE_EMAIL": "programme@pgconf.pl",
+    "CONTACT_INBOX": "hello@pgconf.pl",
+    "NEWSLETTER_LIST_ID": "<list-id>",
+    "TABLE_STORAGE_CONNECTION": "UseDevelopmentStorage=true"
+  }
+}

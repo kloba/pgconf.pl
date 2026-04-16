@@ -1,0 +1,589 @@
+---
+import Base from '~/layouts/Base.astro';
+
+const formats = [
+  { code: 'talk-25', label: '25-minute talk', desc: 'A focused single-topic session — ideal for case studies, deep dives into a single feature, or sharing a pattern that worked.' },
+  { code: 'talk-45', label: '45-minute talk', desc: 'Room to develop an argument, walk through architecture, or compare approaches with the breathing space the topic deserves.' },
+  { code: 'workshop-90', label: '90-minute workshop', desc: 'Hands-on, laptops open. Bring an exercise. We provide power, fast Wi-Fi, and an audience hungry to actually try things.' },
+  { code: 'lightning-5', label: '5-minute lightning', desc: 'One idea, one slide deck, no quarter. Submitted ahead of time — chosen by the programme committee, not signed up on the day.' },
+];
+
+const levels = [
+  { code: 'beginner', label: 'Beginner', desc: 'Assumes basic SQL and a working PostgreSQL install — nothing more.' },
+  { code: 'intermediate', label: 'Intermediate', desc: 'For day-to-day operators, application developers, and DBAs comfortable with EXPLAIN.' },
+  { code: 'advanced', label: 'Advanced', desc: 'Internals, kernel-adjacent topics, complex replication topologies, or research work.' },
+];
+
+const topics = [
+  'PostgreSQL internals',
+  'Performance & query tuning',
+  'Replication & high availability',
+  'AI, embeddings, and pgvector',
+  'Observability & monitoring',
+  'Security & compliance',
+  'Cloud & managed Postgres',
+  'Migration stories',
+];
+---
+
+<Base
+  title="Call for Papers — PGConf Poland 2026"
+  description="Submit a talk, workshop, or lightning session for PGConf Poland 2026 in Gdańsk. CFP closes 15 August 2026."
+>
+  <section class="section cfp-hero">
+    <div class="container">
+      <p class="eyebrow">Call for Papers</p>
+      <h1 class="display-headline">Speak at PGConf Poland 2026.</h1>
+      <p class="lede">
+        We are looking for talks, workshops, and lightning sessions from anyone working with
+        PostgreSQL — first-time speakers especially welcome. The conference happens on
+        24 November 2026 at ARCHE Dwór Uphagena Gdańsk.
+      </p>
+
+      <div class="cfp-dates">
+        <div class="cfp-date">
+          <span class="cfp-date__label">CFP opens</span>
+          <span class="cfp-date__value">15 April 2026</span>
+        </div>
+        <div class="cfp-date">
+          <span class="cfp-date__label">Deadline</span>
+          <span class="cfp-date__value">15 August 2026</span>
+        </div>
+        <div class="cfp-date">
+          <span class="cfp-date__label">Notifications by</span>
+          <span class="cfp-date__value">10 September 2026</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container container--narrow">
+      <h2 class="section-title">Formats</h2>
+      <div class="rule"></div>
+      <ul class="info-list">
+        {formats.map((f) => (
+          <li class="info-row">
+            <h3 class="info-row__title">{f.label}</h3>
+            <p class="info-row__body">{f.desc}</p>
+          </li>
+        ))}
+      </ul>
+
+      <h2 class="section-title">Audience levels</h2>
+      <div class="rule"></div>
+      <ul class="info-list">
+        {levels.map((l) => (
+          <li class="info-row">
+            <h3 class="info-row__title">{l.label}</h3>
+            <p class="info-row__body">{l.desc}</p>
+          </li>
+        ))}
+      </ul>
+
+      <h2 class="section-title">Suggested topics</h2>
+      <div class="rule"></div>
+      <p class="muted">
+        Not exhaustive — surprise us. If your talk is honest about what worked
+        <em> and what didn't</em>, you have our attention.
+      </p>
+      <ul class="topic-grid">
+        {topics.map((t) => <li class="topic-chip">{t}</li>)}
+      </ul>
+
+      <h2 class="section-title">What we offer speakers</h2>
+      <div class="rule"></div>
+      <ul class="benefits-list">
+        <li><strong>Free conference ticket</strong> — including catering and the social event.</li>
+        <li><strong>Travel support fund</strong> — limited budget for speakers who could not otherwise attend. Apply in the form below.</li>
+        <li><strong>Speaker dinner</strong> — the evening of 24 November in Gdańsk Old Town.</li>
+        <li><strong>Honest review</strong> — every submission is read by at least three programme committee members.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section cfp-form-section">
+    <div class="container container--narrow">
+      <h2 class="section-title section-title--center">Submit your proposal</h2>
+      <div class="rule rule--center"></div>
+      <p class="muted center">
+        All fields marked with <span class="req">*</span> are required. You will receive an
+        email confirmation; if you do not, write to <a href="mailto:program@pgconf.pl">program@pgconf.pl</a>.
+      </p>
+
+      <form
+        id="cfp-form"
+        class="cfp-form"
+        method="POST"
+        action="/api/cfp-submit"
+        novalidate
+        data-state="idle"
+      >
+        <fieldset class="form-fieldset">
+          <legend class="form-legend">Speaker</legend>
+
+          <div class="field">
+            <label for="speakerName">Full name <span class="req">*</span></label>
+            <input id="speakerName" name="speakerName" type="text" required minlength="2" maxlength="120" autocomplete="name" />
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="speakerEmail">Email <span class="req">*</span></label>
+              <input id="speakerEmail" name="speakerEmail" type="email" required maxlength="200" autocomplete="email" />
+            </div>
+            <div class="field">
+              <label for="speakerPronouns">Pronouns</label>
+              <input id="speakerPronouns" name="speakerPronouns" type="text" maxlength="40" placeholder="she/her, they/them, …" />
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="speakerCompany">Company / affiliation</label>
+              <input id="speakerCompany" name="speakerCompany" type="text" maxlength="120" autocomplete="organization" />
+            </div>
+            <div class="field">
+              <label for="speakerCountry">Country <span class="req">*</span></label>
+              <input id="speakerCountry" name="speakerCountry" type="text" required minlength="2" maxlength="80" autocomplete="country-name" />
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="speakerBio">Short bio <span class="req">*</span></label>
+            <textarea id="speakerBio" name="speakerBio" required minlength="40" maxlength="1500" rows="4" placeholder="A few sentences in third person — what you do, what you've built, where people can find your work."></textarea>
+            <p class="hint">40–1500 characters. Will be published on the schedule page if accepted.</p>
+          </div>
+        </fieldset>
+
+        <div class="form-divider" aria-hidden="true"></div>
+
+        <fieldset class="form-fieldset">
+          <legend class="form-legend">Talk</legend>
+
+          <div class="field">
+            <label for="talkTitle">Title <span class="req">*</span></label>
+            <input id="talkTitle" name="talkTitle" type="text" required minlength="8" maxlength="160" />
+            <p class="hint">Concrete and specific reads better than clever and vague.</p>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="talkFormat">Format <span class="req">*</span></label>
+              <select id="talkFormat" name="talkFormat" required>
+                <option value="" disabled selected>Choose a format…</option>
+                {formats.map((f) => <option value={f.code}>{f.label}</option>)}
+              </select>
+            </div>
+            <div class="field">
+              <label for="talkLevel">Level <span class="req">*</span></label>
+              <select id="talkLevel" name="talkLevel" required>
+                <option value="" disabled selected>Choose a level…</option>
+                {levels.map((l) => <option value={l.code}>{l.label}</option>)}
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="talkAbstract">Abstract <span class="req">*</span></label>
+            <textarea id="talkAbstract" name="talkAbstract" required minlength="120" maxlength="3000" rows="8" placeholder="What will the audience learn? What is the takeaway? Why now? Be specific about the problem and the approach."></textarea>
+            <p class="hint">120–3000 characters. The programme committee reads abstracts blind from the speaker name.</p>
+          </div>
+
+          <div class="field">
+            <label for="talkTopicsInput">Topics <span class="req">*</span></label>
+            <div class="tag-input" data-tag-input>
+              <ul class="tag-input__chips" data-tag-chips></ul>
+              <input
+                id="talkTopicsInput"
+                type="text"
+                class="tag-input__field"
+                placeholder="Type a topic and press Enter…"
+                data-tag-field
+                aria-describedby="talkTopicsHint"
+              />
+              <input type="hidden" name="talkTopics" data-tag-hidden value="" />
+            </div>
+            <p class="hint" id="talkTopicsHint">1–5 topics. Press <kbd>Enter</kbd> or comma to add. JavaScript-disabled fallback: type a comma-separated list below.</p>
+            <noscript>
+              <input type="text" name="talkTopics" maxlength="240" placeholder="performance, replication, pgvector" />
+            </noscript>
+          </div>
+
+          <div class="field">
+            <label class="checkbox">
+              <input id="needsTravelSupport" name="needsTravelSupport" type="checkbox" value="true" />
+              <span>I would like to be considered for the travel support fund.</span>
+            </label>
+          </div>
+
+          <div class="field">
+            <label for="notes">Notes for the committee</label>
+            <textarea id="notes" name="notes" maxlength="1000" rows="3" placeholder="Anything else we should know — co-speaker, AV needs, scheduling constraints."></textarea>
+          </div>
+        </fieldset>
+
+        <div class="form-divider" aria-hidden="true"></div>
+
+        <div class="field captcha">
+          {/* TODO: replace placeholder sitekey with real Cloudflare Turnstile sitekey before launch */}
+          <div class="cf-turnstile" data-sitekey="placeholder"></div>
+          <input type="hidden" name="turnstileToken" value="" />
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn--primary">Submit proposal</button>
+          <p class="form-status" data-form-status aria-live="polite"></p>
+        </div>
+      </form>
+    </div>
+  </section>
+</Base>
+
+<script>
+  // Tag input — progressive enhancement for talkTopics
+  document.querySelectorAll<HTMLElement>('[data-tag-input]').forEach((root) => {
+    const chips = root.querySelector<HTMLUListElement>('[data-tag-chips]')!;
+    const field = root.querySelector<HTMLInputElement>('[data-tag-field]')!;
+    const hidden = root.querySelector<HTMLInputElement>('[data-tag-hidden]')!;
+    const tags: string[] = [];
+    const MAX = 5;
+
+    const sync = () => {
+      hidden.value = tags.join(',');
+      chips.innerHTML = '';
+      tags.forEach((t, idx) => {
+        const li = document.createElement('li');
+        li.className = 'tag-input__chip';
+        li.innerHTML = `<span>${t.replace(/</g, '&lt;')}</span><button type="button" aria-label="Remove ${t}">×</button>`;
+        li.querySelector('button')!.addEventListener('click', () => {
+          tags.splice(idx, 1);
+          sync();
+        });
+        chips.appendChild(li);
+      });
+    };
+
+    const addTag = (raw: string) => {
+      const t = raw.trim().replace(/,$/, '').slice(0, 40);
+      if (!t || t.length < 2 || tags.length >= MAX || tags.includes(t)) return;
+      tags.push(t);
+      sync();
+    };
+
+    field.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ',') {
+        e.preventDefault();
+        addTag(field.value);
+        field.value = '';
+      } else if (e.key === 'Backspace' && !field.value && tags.length) {
+        tags.pop();
+        sync();
+      }
+    });
+    field.addEventListener('blur', () => {
+      if (field.value.trim()) {
+        addTag(field.value);
+        field.value = '';
+      }
+    });
+    sync();
+  });
+
+  // Form progressive enhancement — POST via fetch, fall back to native
+  const form = document.getElementById('cfp-form') as HTMLFormElement | null;
+  if (form) {
+    const status = form.querySelector<HTMLElement>('[data-form-status]');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      form.dataset.state = 'submitting';
+      if (status) status.textContent = 'Sending…';
+
+      const fd = new FormData(form);
+      // Convert checkbox + topics for JSON body
+      const payload: Record<string, unknown> = {};
+      fd.forEach((v, k) => {
+        if (k === 'talkTopics') {
+          payload[k] = String(v).split(',').map((s) => s.trim()).filter(Boolean);
+        } else if (k === 'needsTravelSupport') {
+          payload[k] = v === 'true' || v === 'on';
+        } else {
+          payload[k] = v;
+        }
+      });
+
+      try {
+        const res = await fetch('/api/cfp-submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        const data = await res.json().catch(() => ({}));
+        if (res.ok && data.ok) {
+          form.dataset.state = 'success';
+          if (status) status.textContent = 'Submission received. Check your email for confirmation.';
+          form.reset();
+        } else {
+          form.dataset.state = 'error';
+          if (status) status.textContent = data.error || 'Something went wrong. Please try again or email program@pgconf.pl.';
+        }
+      } catch {
+        form.dataset.state = 'error';
+        if (status) status.textContent = 'Network error. Please try again or email program@pgconf.pl.';
+      }
+    });
+  }
+</script>
+
+<style>
+  .cfp-hero {
+    padding-bottom: 0;
+  }
+  .eyebrow {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: var(--ls-eyebrow);
+    font-size: var(--fs-xs);
+    color: var(--color-gold);
+    margin: 0 0 var(--space-4);
+  }
+  .display-headline {
+    font-family: var(--font-display);
+    font-size: var(--fs-4xl);
+    font-weight: 400;
+    line-height: var(--lh-tight);
+    letter-spacing: var(--ls-tight);
+    color: var(--color-fg-strong);
+    margin: 0 0 var(--space-6);
+    max-width: 18ch;
+  }
+  .lede {
+    font-family: var(--font-display);
+    font-size: var(--fs-xl);
+    line-height: var(--lh-snug);
+    color: var(--color-fg);
+    max-width: 60ch;
+    margin: 0 0 var(--space-12);
+    font-weight: 300;
+  }
+  .cfp-dates {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: var(--space-6);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    padding: var(--space-8) 0;
+  }
+  .cfp-date {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .cfp-date__label {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: var(--ls-eyebrow);
+    font-size: var(--fs-xs);
+    color: var(--color-fg-muted);
+  }
+  .cfp-date__value {
+    font-family: var(--font-display);
+    font-size: var(--fs-xl);
+    color: var(--color-gold);
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: var(--fs-2xl);
+    font-weight: 400;
+    color: var(--color-fg-strong);
+    margin: var(--space-16) 0 var(--space-3);
+    letter-spacing: var(--ls-snug);
+  }
+  .section-title--center { text-align: center; }
+  .rule {
+    width: 80px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--color-gold), transparent);
+    margin: 0 0 var(--space-8);
+  }
+  .rule--center { margin-left: auto; margin-right: auto; background: linear-gradient(90deg, transparent, var(--color-gold), transparent); }
+
+  .info-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--space-6); }
+  .info-row { padding-bottom: var(--space-6); border-bottom: 1px solid var(--color-border-cool); }
+  .info-row:last-child { border-bottom: none; }
+  .info-row__title { font-family: var(--font-display); font-size: var(--fs-lg); margin: 0 0 var(--space-2); color: var(--color-fg-strong); font-weight: 500; }
+  .info-row__body { color: var(--color-fg-muted); margin: 0; line-height: var(--lh-base); }
+
+  .topic-grid { list-style: none; padding: 0; margin: var(--space-6) 0 0; display: flex; flex-wrap: wrap; gap: var(--space-3); }
+  .topic-chip {
+    border: 1px solid var(--color-border);
+    color: var(--color-fg);
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-pill);
+    font-size: var(--fs-sm);
+    font-family: var(--font-sans);
+    background: var(--color-bg-elev);
+  }
+
+  .benefits-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--space-3); }
+  .benefits-list li {
+    padding-left: var(--space-6);
+    position: relative;
+    color: var(--color-fg-muted);
+    line-height: var(--lh-base);
+  }
+  .benefits-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.7em;
+    width: 12px;
+    height: 1px;
+    background: var(--color-gold);
+  }
+  .benefits-list strong { color: var(--color-fg-strong); font-weight: 500; }
+
+  .muted { color: var(--color-fg-muted); }
+  .muted.center { text-align: center; }
+
+  /* ---- form ---- */
+  .cfp-form-section { background: var(--color-bg-sunken); }
+  .cfp-form { margin-top: var(--space-10); display: flex; flex-direction: column; gap: var(--space-8); }
+
+  .form-fieldset { border: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--space-5); }
+  .form-legend {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: var(--ls-eyebrow);
+    font-size: var(--fs-xs);
+    color: var(--color-gold);
+    margin-bottom: var(--space-4);
+    padding: 0;
+  }
+  .form-divider { height: 1px; background: linear-gradient(90deg, transparent, var(--color-gold), transparent); opacity: 0.55; }
+
+  .field { display: flex; flex-direction: column; gap: var(--space-2); }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-5); }
+  @media (max-width: 640px) { .field-row { grid-template-columns: 1fr; } }
+  .field label {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: var(--ls-wide);
+    color: var(--color-fg);
+  }
+  .req { color: var(--color-red); }
+  .field input, .field select, .field textarea {
+    background: var(--color-bg);
+    color: var(--color-fg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: var(--space-3) var(--space-4);
+    font-family: var(--font-sans);
+    font-size: var(--fs-base);
+    transition: border-color var(--dur-fast) var(--ease-out-quart), box-shadow var(--dur-fast);
+  }
+  .field input:focus, .field select:focus, .field textarea:focus {
+    outline: none;
+    border-color: var(--color-gold);
+    box-shadow: 0 0 0 3px var(--color-gold-soft);
+  }
+  .field textarea { resize: vertical; min-height: 6rem; line-height: var(--lh-base); }
+  .hint { font-size: var(--fs-xs); color: var(--color-fg-faint); margin: 0; }
+  .hint kbd {
+    font-family: var(--font-mono);
+    background: var(--color-bg-elev);
+    border: 1px solid var(--color-border-cool);
+    padding: 1px 4px;
+    border-radius: 3px;
+    font-size: 0.85em;
+  }
+
+  .checkbox { display: flex; flex-direction: row; align-items: flex-start; gap: var(--space-3); cursor: pointer; text-transform: none; letter-spacing: 0; font-family: var(--font-sans); font-size: var(--fs-base); color: var(--color-fg); }
+  .checkbox input { width: 1.1rem; height: 1.1rem; margin-top: 0.18rem; accent-color: var(--color-gold); }
+
+  .tag-input {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: var(--space-2) var(--space-3);
+    align-items: center;
+  }
+  .tag-input:focus-within { border-color: var(--color-gold); box-shadow: 0 0 0 3px var(--color-gold-soft); }
+  .tag-input__chips { list-style: none; margin: 0; padding: 0; display: contents; }
+  .tag-input__chip {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    background: var(--color-gold-soft);
+    border: 1px solid var(--color-border-strong);
+    color: var(--color-fg);
+    padding: 2px var(--space-2) 2px var(--space-3);
+    border-radius: var(--radius-pill);
+    font-size: var(--fs-sm);
+  }
+  .tag-input__chip button {
+    background: none;
+    border: none;
+    color: var(--color-gold-bright);
+    font-size: 1.1rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0 var(--space-1);
+  }
+  .tag-input__field {
+    flex: 1;
+    min-width: 8rem;
+    border: none !important;
+    outline: none;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: var(--space-2) 0 !important;
+  }
+
+  .captcha { align-items: center; min-height: 65px; }
+  .cf-turnstile {
+    width: 300px;
+    height: 65px;
+    background: var(--color-bg-elev);
+    border: 1px dashed var(--color-border);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-fg-faint);
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+  }
+  .cf-turnstile::before { content: 'Cloudflare Turnstile'; }
+
+  .form-actions { display: flex; flex-direction: column; gap: var(--space-4); align-items: center; margin-top: var(--space-4); }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-4) var(--space-10);
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: var(--ls-wide);
+    font-size: var(--fs-sm);
+    border-radius: var(--radius-sm);
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: transform var(--dur-fast) var(--ease-out-quart), box-shadow var(--dur-base);
+  }
+  .btn--primary {
+    background: var(--color-red);
+    color: var(--color-fg-strong);
+  }
+  .btn--primary:hover { background: var(--color-red-deep); box-shadow: var(--shadow-red-glow); transform: translateY(-1px); }
+
+  form[data-state='submitting'] .btn { opacity: 0.6; pointer-events: none; }
+  form[data-state='success'] .form-status { color: var(--color-success); }
+  form[data-state='error'] .form-status { color: var(--color-danger); }
+  .form-status { font-family: var(--font-mono); font-size: var(--fs-sm); margin: 0; }
+</style>

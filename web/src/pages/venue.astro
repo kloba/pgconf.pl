@@ -1,0 +1,419 @@
+---
+import Base from '~/layouts/Base.astro';
+
+// ARCHE Dwór Uphagena, Gdańsk — approximate coordinates
+const lat = 54.3536;
+const lon = 18.6322;
+const delta = 0.004;
+const bbox = `${lon - delta}%2C${lat - delta}%2C${lon + delta}%2C${lat + delta}`;
+const mapSrc = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${lat}%2C${lon}`;
+const mapLink = `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lon}#map=18/${lat}/${lon}`;
+---
+
+<Base
+  title="Venue — PGConf Poland 2026"
+  description="ARCHE Dwór Uphagena Gdańsk — a historic complex on ul. Prof. Z. Kieturakisa 1, hosting PGConf Poland 2026 on 24 November."
+>
+  <section class="section section--hero">
+    <div class="container">
+      <p class="eyebrow">Venue</p>
+      <h1 class="page-title">ARCHE Dwór Uphagena, Gdańsk.</h1>
+      <p class="lede">
+        The conference takes over a wing of the historic Dwór Uphagena estate on the southern edge of
+        Gdańsk's Old Town — a restored manor complex of brick walls, vaulted ceilings and quiet
+        courtyards, ten minutes on foot from the Motława waterfront.
+      </p>
+      <address class="address">
+        ARCHE Dwór Uphagena<br />
+        ul. Prof. Z. Kieturakisa 1<br />
+        80-742 Gdańsk, Poland
+      </address>
+      <span class="rule rule--gold" aria-hidden="true"></span>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="map-wrap">
+        <iframe
+          title="Map of ARCHE Dwór Uphagena, Gdańsk"
+          src={mapSrc}
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
+        <p class="map-link">
+          <a href={mapLink} rel="noopener" target="_blank">View larger map on OpenStreetMap →</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container">
+      <h2 class="section-title">Rooms in use on 24 November</h2>
+      <span class="rule rule--gold rule--sm" aria-hidden="true"></span>
+      <ul class="rooms">
+        <li>
+          <p class="rooms__tag">Main hall</p>
+          <h3>Sala Bastion Miś A+B+C</h3>
+          <p>
+            The full Bastion Miś hall, opened up across all three sections, hosts every main-track talk.
+            Theatre seating for sixty, a single stage at the long end, projection on a wide screen and
+            wired audio for the speaker — and a hand-held for questions from the floor.
+          </p>
+        </li>
+        <li>
+          <p class="rooms__tag">Workshop</p>
+          <h3>Sala "U Profesora B"</h3>
+          <p>
+            Smaller breakout room dedicated to the afternoon hands-on workshop. Cabaret-style seating,
+            power at every place, and a separate display for live demos. Workshop seats are allocated on
+            registration — first come, first served.
+          </p>
+        </li>
+        <li>
+          <p class="rooms__tag">Registration &amp; coffee</p>
+          <h3>Foyer Sali Miś</h3>
+          <p>
+            The foyer immediately outside the main hall is the registration desk, the cloakroom, and the
+            coffee point for both morning and afternoon breaks. Standing tables make it easy to keep a
+            cup in one hand and a conversation in the other.
+          </p>
+        </li>
+        <li>
+          <p class="rooms__tag">Lunch</p>
+          <h3>Restauracja Stara Kuchnia</h3>
+          <p>
+            Sit-down buffet lunch in the on-site restaurant on the ground floor. A vegetarian main, a
+            meat main, salads, soup and dessert are part of the standard menu; allergens and dietary
+            preferences captured at registration are accommodated.
+          </p>
+        </li>
+        <li>
+          <p class="rooms__tag">Sponsors</p>
+          <h3>Spiżarnia</h3>
+          <p>
+            The "Spiżarnia" pantry room is given over to sponsor tables for the day. It opens onto the
+            corridor between the foyer and the lunch room, so foot traffic between sessions naturally
+            passes through.
+          </p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container grid grid--two">
+      <div>
+        <h2 class="section-title">Getting there</h2>
+        <span class="rule rule--gold rule--sm" aria-hidden="true"></span>
+        <h3 class="sub">By air</h3>
+        <p>
+          Gdańsk Lech Wałęsa Airport (GDN) is roughly 12 km west of the venue. The airport has direct
+          flights to most major European hubs. From the terminal, the SKM commuter train into Gdańsk
+          Główny takes about 25 minutes; a taxi or rideshare to the venue is 20–30 minutes outside rush
+          hour, longer in traffic.
+        </p>
+        <h3 class="sub">By train</h3>
+        <p>
+          Gdańsk Główny is the main intercity station, about 3 km north of the venue. PKP Intercity
+          connects from Warsaw, Kraków, Poznań, Wrocław and Berlin (via Szczecin). From Gdańsk Główny,
+          take a tram south, grab a taxi (8–10 minutes) or walk along the waterfront in around 35
+          minutes.
+        </p>
+        <h3 class="sub">By tram</h3>
+        <p>
+          Trams 8, 9 and 12 run from the city centre to stops within five minutes' walk of Dwór
+          Uphagena. Tickets are sold from machines at every stop and inside the trams (card and contact-
+          less accepted). A 75-minute ticket is enough for the journey from Główny.
+        </p>
+        <h3 class="sub">By car</h3>
+        <p>
+          Paid parking is available on site at the venue, with a limited number of spaces — first come,
+          first served. Public paid parking zones cover most of the surrounding streets on weekdays
+          until 18:00. We strongly recommend public transport if you are staying inside Gdańsk.
+        </p>
+      </div>
+      <aside class="card card--gold">
+        <h3 class="card-title">Quick reference</h3>
+        <dl class="meta">
+          <div><dt>Address</dt><dd>ul. Prof. Z. Kieturakisa 1, 80-742 Gdańsk</dd></div>
+          <div><dt>Airport</dt><dd>GDN — ~12 km</dd></div>
+          <div><dt>Main station</dt><dd>Gdańsk Główny — ~3 km</dd></div>
+          <div><dt>Trams</dt><dd>Lines 8, 9, 12</dd></div>
+          <div><dt>Parking</dt><dd>Paid, on site</dd></div>
+          <div><dt>Doors open</dt><dd>08:30, 24 November 2026</dd></div>
+        </dl>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container">
+      <h2 class="section-title">Accessibility</h2>
+      <span class="rule rule--gold rule--sm" aria-hidden="true"></span>
+      <div class="grid grid--two">
+        <ul class="bullets">
+          <li>Step-free access from the main entrance through to all conference rooms.</li>
+          <li>Accessible toilets on the conference floor.</li>
+          <li>Reserved front-row seating in the main hall on request.</li>
+          <li>Induction (hearing) loop available on request — please flag at registration.</li>
+          <li>Quiet room available throughout the day for breaks away from the crowd.</li>
+          <li>Service animals welcome.</li>
+        </ul>
+        <p>
+          If there is anything else we can do to make your day at PGConf Poland easier, write to
+          <a href="mailto:hello@pgconf.pl" class="link-arrow">hello@pgconf.pl</a>
+          and we will arrange it. Requests reaching us at least two weeks before the event are easiest
+          to honour, but we will do our best with anything we receive after that as well.
+        </p>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .section {
+    padding-block: clamp(3.5rem, 7vw, 6rem);
+  }
+  .section--alt {
+    background: var(--color-bg-elev);
+    border-block: 1px solid var(--color-border);
+  }
+  .section--hero {
+    padding-block: clamp(5rem, 10vw, 8rem) clamp(2.5rem, 5vw, 4rem);
+  }
+  .container {
+    max-width: 72rem;
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 4vw, 2.5rem);
+  }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    margin: 0 0 1.25rem;
+  }
+  .page-title {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(2.5rem, 6vw, 4.25rem);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    margin: 0 0 1.5rem;
+    max-width: 22ch;
+  }
+  .lede {
+    font-size: clamp(1.075rem, 1.6vw, 1.25rem);
+    line-height: 1.55;
+    color: var(--color-fg-muted);
+    max-width: 60ch;
+    margin: 0 0 1.75rem;
+  }
+  .address {
+    font-family: var(--font-mono);
+    font-style: normal;
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: var(--color-fg);
+    margin: 0 0 2rem;
+    padding-left: 1rem;
+    border-left: 2px solid var(--color-gold);
+  }
+  .section-title {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    letter-spacing: -0.005em;
+    margin: 0 0 0.75rem;
+  }
+  .sub {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 1.1rem;
+    color: var(--color-gold-warm);
+    margin: 1.75rem 0 0.4rem;
+  }
+  .sub:first-of-type {
+    margin-top: 0.5rem;
+  }
+  .rule {
+    display: block;
+    height: 1px;
+    background: linear-gradient(90deg, var(--color-gold), transparent);
+    margin: 0.25rem 0 2rem;
+  }
+  .rule--gold {
+    width: 8rem;
+    background: linear-gradient(90deg, var(--color-gold), var(--color-gold-warm), transparent);
+    height: 2px;
+  }
+  .rule--sm {
+    width: 4rem;
+    margin-bottom: 2.5rem;
+  }
+  p {
+    color: var(--color-fg-muted);
+    line-height: 1.65;
+    margin: 0 0 1rem;
+    max-width: 62ch;
+  }
+  .map-wrap {
+    border: 1px solid var(--color-border);
+    background: var(--color-bg-elev);
+    padding: 0.5rem 0.5rem 0;
+  }
+  .map-wrap iframe {
+    width: 100%;
+    height: clamp(20rem, 50vh, 30rem);
+    border: 0;
+    display: block;
+    filter: saturate(0.9) brightness(0.95);
+  }
+  .map-link {
+    margin: 0;
+    padding: 0.75rem 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--color-fg-muted);
+    text-align: right;
+  }
+  .map-link a {
+    color: var(--color-gold);
+    text-decoration: none;
+  }
+  .map-link a:hover {
+    text-decoration: underline;
+  }
+  .rooms {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .rooms li {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.4rem;
+    padding: 1.5rem 0;
+    border-top: 1px solid var(--color-border);
+  }
+  @media (min-width: 48rem) {
+    .rooms li {
+      grid-template-columns: 12rem 1fr;
+      gap: 2rem;
+    }
+  }
+  .rooms li:last-child {
+    border-bottom: 1px solid var(--color-border);
+  }
+  .rooms__tag {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    margin: 0;
+  }
+  .rooms h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 1.25rem;
+    color: var(--color-fg);
+    margin: 0 0 0.5rem;
+  }
+  .rooms p:not(.rooms__tag) {
+    font-size: 0.95rem;
+    margin: 0;
+  }
+  .grid {
+    display: grid;
+    gap: clamp(2rem, 4vw, 3.5rem);
+  }
+  .grid--two {
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 56rem) {
+    .grid--two {
+      grid-template-columns: 1.4fr 1fr;
+      align-items: start;
+    }
+  }
+  .card {
+    border: 1px solid var(--color-border);
+    background: var(--color-bg);
+    padding: 1.75rem;
+    position: relative;
+  }
+  .card--gold::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-top: 2px solid var(--color-gold);
+    pointer-events: none;
+  }
+  .card-title {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 1.25rem;
+    margin: 0 0 1rem;
+    color: var(--color-fg);
+  }
+  .meta {
+    display: grid;
+    gap: 0.65rem;
+    margin: 0;
+  }
+  .meta > div {
+    display: grid;
+    grid-template-columns: 8rem 1fr;
+    gap: 0.75rem;
+    font-size: 0.95rem;
+  }
+  .meta dt {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    padding-top: 0.15rem;
+  }
+  .meta dd {
+    margin: 0;
+    color: var(--color-fg);
+  }
+  .bullets {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.5rem;
+    display: grid;
+    gap: 0.75rem;
+  }
+  .bullets li {
+    position: relative;
+    padding-left: 1.5rem;
+    color: var(--color-fg-muted);
+    line-height: 1.55;
+  }
+  .bullets li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.65em;
+    width: 0.6rem;
+    height: 1px;
+    background: var(--color-gold);
+  }
+  .link-arrow {
+    color: var(--color-gold);
+    text-decoration: none;
+    border-bottom: 1px solid color-mix(in oklab, var(--color-gold) 35%, transparent);
+  }
+  .link-arrow:hover {
+    border-bottom-color: var(--color-gold);
+  }
+</style>

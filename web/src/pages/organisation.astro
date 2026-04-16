@@ -1,0 +1,112 @@
+---
+import Base from '~/layouts/Base.astro';
+
+const team = [
+  'Andreas Scherbaum',
+  'Alex Gostev',
+  'Pavlo Golub',
+  'Sergey Dudoladov',
+  'Oleksii Kliukin',
+  'Jan Wieliczka',
+  'Alicja Kucharczyk',
+  'Tomasz Rybak',
+  'Michal',
+  'Jan Wieremjewicz',
+  'Taras',
+];
+
+const initials = (name: string): string =>
+  name
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((p) => p[0]?.toUpperCase() ?? '')
+    .join('');
+---
+<Base
+  title="Organisation — PGConf Poland 2026"
+  description="The organising team behind PGConf Poland 2026, brought to you by PostgreSQL Europe."
+>
+  <section class="section section--hero">
+    <div class="container">
+      <p class="eyebrow">Organisation</p>
+      <h1 class="page-title">The team behind the event.</h1>
+      <p class="lede">
+        PGConf Poland 2026 is organised by PostgreSQL Europe with a small team of community
+        volunteers. Roles and biographies will be published shortly — for now, a thank-you to
+        the people putting it together:
+      </p>
+      <span class="rule rule--gold" aria-hidden="true"></span>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <ul class="team">
+        {team.map((name) => (
+          <li class="member">
+            <span class="member__avatar" aria-hidden="true">{initials(name)}</span>
+            <span class="member__name">{name}</span>
+          </li>
+        ))}
+      </ul>
+
+      <p class="organiser">
+        PGConf Poland 2026 is organised by
+        <a href="https://www.postgresql.eu/" rel="noopener" target="_blank">PostgreSQL Europe</a>,
+        a non-profit dedicated to the advancement of PostgreSQL across Europe.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .team {
+    list-style: none;
+    margin: 0 0 var(--space-10);
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: var(--space-3);
+  }
+  .member {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    background: var(--color-bg-elev);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    transition: border-color 200ms ease, transform 200ms ease;
+  }
+  .member:hover {
+    border-color: var(--color-gold);
+    transform: translateY(-1px);
+  }
+  .member__avatar {
+    width: 38px;
+    height: 38px;
+    flex: 0 0 38px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #d4a93a, #8a6a1d);
+    color: #1a1408;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-weight: 600;
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+  }
+  .member__name {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    color: var(--color-fg);
+  }
+  .organiser {
+    text-align: center;
+    color: var(--color-fg-muted);
+    max-width: 60ch;
+    margin: 0 auto;
+  }
+</style>

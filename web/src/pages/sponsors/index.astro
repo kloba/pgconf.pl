@@ -1,0 +1,76 @@
+---
+import Base from '~/layouts/Base.astro';
+import SponsorPlaceholder from '~/components/SponsorPlaceholder.astro';
+
+const tiers = [
+  { tier: 'platinum', label: 'Platinum', slots: 2 },
+  { tier: 'gold',     label: 'Gold',     slots: 4 },
+  { tier: 'silver',   label: 'Silver',   slots: 6 },
+  { tier: 'community', label: 'Community', slots: 8 },
+];
+---
+<Base
+  title="Sponsors — PGConf Poland 2026"
+  description="PGConf Poland 2026 sponsors. Sponsor lineup announcing soon — become a partner of the PostgreSQL Europe community in Gdańsk."
+>
+  <section class="section section--hero">
+    <div class="container">
+      <p class="eyebrow">Sponsors</p>
+      <h1 class="page-title">Sponsor lineup announcing soon.</h1>
+      <p class="lede">
+        We are currently confirming partners for PGConf Poland 2026. If your company depends on
+        PostgreSQL — and wants to be in front of the people who run it at scale — there is a tier
+        with your name on it.
+      </p>
+      <span class="rule rule--gold" aria-hidden="true"></span>
+      <p>
+        <a href="/sponsors/become" class="btn btn--primary">Become a sponsor</a>
+      </p>
+    </div>
+  </section>
+
+  {tiers.map(({ tier, label, slots }) => (
+    <section class="section section--tight">
+      <div class="container">
+        <h2 class="tier-title">{label}</h2>
+        <span class="rule rule--gold rule--sm" aria-hidden="true"></span>
+        <ul class="tier-grid" data-tier={tier}>
+          {Array.from({ length: slots }, (_, i) => (
+            <li class="tier-slot">
+              <SponsorPlaceholder seed={i + 1} label="Your name here" muted />
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  ))}
+</Base>
+
+<style>
+  .tier-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    margin: 0 0 var(--space-2);
+    color: var(--color-fg);
+  }
+  .tier-grid {
+    list-style: none;
+    margin: var(--space-6) 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3);
+  }
+  @media (min-width: 720px) {
+    .tier-grid { grid-template-columns: repeat(4, 1fr); gap: var(--space-4); }
+  }
+  .tier-grid[data-tier="platinum"] .tier-slot { aspect-ratio: 16 / 9; }
+  .tier-grid[data-tier="gold"]     .tier-slot { aspect-ratio: 16 / 9; }
+  .tier-grid[data-tier="silver"]   .tier-slot { aspect-ratio: 4 / 3; }
+  .tier-grid[data-tier="community"] .tier-slot { aspect-ratio: 1 / 1; }
+  .tier-slot {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+  .section--tight { padding-block: var(--space-12); }
+</style>

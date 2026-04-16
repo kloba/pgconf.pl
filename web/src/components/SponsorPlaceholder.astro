@@ -1,0 +1,64 @@
+---
+interface Props {
+  seed: number;
+  label: string;
+  muted?: boolean;
+}
+const { seed, label, muted = false } = Astro.props;
+const palette = [
+  ['#2a3556', '#3a4775'],
+  ['#3d2a3a', '#5b3d52'],
+  ['#1f3a3a', '#2c5252'],
+  ['#3a342a', '#5b4d3a'],
+  ['#2a3a2f', '#3d5240'],
+];
+const [c1, c2] = palette[(seed - 1) % palette.length];
+---
+<div
+  class:list={['placeholder', { 'placeholder--muted': muted }]}
+  style={`--c1:${c1};--c2:${c2}`}
+  aria-label={label}
+  role="img"
+>
+  <span class="placeholder__label">{label}</span>
+</div>
+
+<style>
+  .placeholder {
+    width: 100%;
+    height: 100%;
+    border-radius: var(--radius-sm, 6px);
+    background: linear-gradient(135deg, var(--c1) 0%, var(--c2) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .placeholder::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 30% 20%, rgba(212,169,58,0.18), transparent 60%);
+    pointer-events: none;
+  }
+  .placeholder__label {
+    position: relative;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 500;
+  }
+  .placeholder--muted {
+    background: linear-gradient(135deg, rgba(255,255,255,0.025), rgba(255,255,255,0.015));
+    border: 1px dashed var(--color-border, rgba(255,255,255,0.18));
+  }
+  .placeholder--muted::before { display: none; }
+  .placeholder--muted .placeholder__label {
+    color: var(--color-fg-muted, rgba(255,255,255,0.45));
+  }
+</style>

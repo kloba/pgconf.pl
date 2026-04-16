@@ -1,0 +1,142 @@
+/*
+ * PGConf Poland 2026 — Design Tokens
+ * Single source of truth for color, type, space, motion.
+ * Tailwind v4 reads these via @theme in global.css.
+ */
+
+:root {
+  /* ---------- COLOR — heraldic dark ---------- */
+  /* Base surface */
+  --color-bg: #0a1428;             /* deep navy — primary canvas */
+  --color-bg-elev: #111d36;        /* one step lighter — cards, header on scroll */
+  --color-bg-sunken: #060d1c;      /* one step darker — recessed wells */
+  --color-bg-overlay: #050a17;     /* mobile nav, modal scrim */
+
+  /* Foreground */
+  --color-fg: #f5ecd6;             /* parchment-warm white */
+  --color-fg-strong: #ffffff;      /* display headlines */
+  --color-fg-muted: #b8b3a3;       /* secondary copy, dates */
+  --color-fg-faint: #6b6a63;       /* meta, dividers, placeholder */
+
+  /* Heraldic gold — primary accent */
+  --color-gold: #d4a93a;           /* hero gold, dividers, focus rings */
+  --color-gold-warm: #b88a2a;      /* hover, deeper edges */
+  --color-gold-bright: #f0c75a;    /* highlights, glints */
+  --color-gold-soft: rgba(212, 169, 58, 0.15);
+
+  /* Polish red — solidarity + primary CTA */
+  --color-red: #d8232a;            /* Polish flag red, "Buy Tickets" button */
+  --color-red-deep: #a51a20;       /* hover state */
+  --color-red-soft: rgba(216, 35, 42, 0.18);
+
+  /* Ukrainian solidarity */
+  --color-blue-uk: #0057b8;        /* official UA blue */
+  --color-yellow-uk: #ffd500;      /* official UA yellow */
+
+  /* Borders & rules */
+  --color-border: rgba(212, 169, 58, 0.22);   /* gold @ 22% */
+  --color-border-strong: rgba(212, 169, 58, 0.45);
+  --color-border-cool: rgba(245, 236, 214, 0.08);
+
+  /* Status (informational, not for branding) */
+  --color-success: #6ec46e;
+  --color-warning: #e0a020;
+  --color-danger:  #d8232a;
+  --color-info:    #5fa8d3;
+
+  /* ---------- TYPOGRAPHY ---------- */
+  --font-display: 'Fraunces Variable', 'Fraunces', Georgia, serif;
+  --font-sans:    'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* Modular type scale (1.250 — major third), fluid via clamp */
+  --fs-xs:  clamp(0.75rem, 0.72rem + 0.15vw, 0.8125rem);    /* 12 → 13 */
+  --fs-sm:  clamp(0.875rem, 0.85rem + 0.15vw, 0.9375rem);   /* 14 → 15 */
+  --fs-base: clamp(1rem, 0.96rem + 0.2vw, 1.0625rem);       /* 16 → 17 */
+  --fs-lg:  clamp(1.125rem, 1.06rem + 0.3vw, 1.25rem);      /* 18 → 20 */
+  --fs-xl:  clamp(1.375rem, 1.25rem + 0.6vw, 1.625rem);     /* 22 → 26 */
+  --fs-2xl: clamp(1.75rem, 1.5rem + 1.1vw, 2.25rem);        /* 28 → 36 */
+  --fs-3xl: clamp(2.25rem, 1.85rem + 1.8vw, 3rem);          /* 36 → 48 */
+  --fs-4xl: clamp(2.875rem, 2.2rem + 3vw, 4.25rem);         /* 46 → 68 */
+  --fs-5xl: clamp(3.5rem, 2.4rem + 4.8vw, 6rem);            /* 56 → 96 */
+  --fs-6xl: clamp(4.5rem, 2.8rem + 7vw, 8rem);              /* 72 → 128 */
+
+  /* Line-heights */
+  --lh-tight: 1.05;
+  --lh-snug:  1.18;
+  --lh-base:  1.55;
+  --lh-loose: 1.75;
+
+  /* Letter-spacing */
+  --ls-tight:   -0.025em;
+  --ls-snug:    -0.012em;
+  --ls-normal:  0;
+  --ls-wide:    0.04em;
+  --ls-eyebrow: 0.18em;
+
+  /* ---------- SPACING (4px base) ---------- */
+  --space-0:  0;
+  --space-1:  0.25rem;   /* 4  */
+  --space-2:  0.5rem;    /* 8  */
+  --space-3:  0.75rem;   /* 12 */
+  --space-4:  1rem;      /* 16 */
+  --space-5:  1.25rem;   /* 20 */
+  --space-6:  1.5rem;    /* 24 */
+  --space-8:  2rem;      /* 32 */
+  --space-10: 2.5rem;    /* 40 */
+  --space-12: 3rem;      /* 48 */
+  --space-16: 4rem;      /* 64 */
+  --space-20: 5rem;      /* 80 */
+  --space-24: 6rem;      /* 96 */
+  --space-32: 8rem;      /* 128 */
+  --space-40: 10rem;     /* 160 */
+
+  /* Section rhythm (vertical padding per section) */
+  --section-pad-y: clamp(4rem, 3rem + 5vw, 8rem);
+  --section-pad-x: clamp(1.25rem, 0.75rem + 2vw, 2.5rem);
+  --container-max: 1240px;
+  --container-narrow: 760px;
+
+  /* ---------- RADII ---------- */
+  --radius-none: 0;
+  --radius-xs:   2px;
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-lg:   14px;
+  --radius-xl:   22px;
+  --radius-2xl:  32px;
+  --radius-pill: 999px;
+
+  /* ---------- SHADOWS (cool, navy-tinted) ---------- */
+  --shadow-sm:  0 1px 2px rgba(0,0,0,0.35);
+  --shadow-md:  0 6px 18px -4px rgba(0,0,0,0.5);
+  --shadow-lg:  0 18px 40px -12px rgba(0,0,0,0.55);
+  --shadow-xl:  0 36px 80px -20px rgba(0,0,0,0.6);
+  --shadow-gold-glow: 0 0 0 1px rgba(212,169,58,0.25), 0 0 32px -4px rgba(212,169,58,0.35);
+  --shadow-red-glow:  0 0 0 1px rgba(216,35,42,0.35),  0 0 36px -8px rgba(216,35,42,0.55);
+
+  /* ---------- Z-INDEX LAYERS ---------- */
+  --z-base:     0;
+  --z-content:  10;
+  --z-decor:    20;
+  --z-grain:    30;
+  --z-sticky:   100;
+  --z-header:   200;
+  --z-overlay:  900;
+  --z-nav:      1000;
+  --z-modal:    1100;
+  --z-toast:    1200;
+
+  /* ---------- MOTION ---------- */
+  --ease-out-quart:   cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-out-expo:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-soft: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring:      cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  --dur-instant: 80ms;
+  --dur-fast:    160ms;
+  --dur-base:    280ms;
+  --dur-slow:    520ms;
+  --dur-slower:  900ms;
+  --dur-cinema:  1400ms;
+}

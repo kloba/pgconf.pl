@@ -1,0 +1,316 @@
+---
+import Base from '~/layouts/Base.astro';
+
+type Item = { name: string; desc: string; meta: string; url?: string };
+type Section = { id: string; title: string; intro: string; items: Item[] };
+
+const sections: Section[] = [
+  {
+    id: 'old-town',
+    title: 'Old Town walk',
+    intro:
+      "Gdańsk's Główne Miasto rebuilt itself meticulously after 1945, and the result is one of the best-preserved historic centres on the Baltic. From the venue you can be at the Royal Way in twelve minutes on foot. Allow half a day to do it properly — it deserves it.",
+    items: [
+      {
+        name: 'Długi Targ (Long Market)',
+        desc: 'The wide, cobbled spine of the Old Town, framed by burgher houses in ochre, oxblood, and pale blue. End to end is about 500 metres of constant photographs.',
+        meta: '~12 min walk · free',
+      },
+      {
+        name: 'Neptune Fountain',
+        desc: 'The bronze sea-god has presided over Długi Targ since 1633, holding his trident toward the harbour. The plaza around it is the natural meeting point in town.',
+        meta: 'On Długi Targ · free',
+      },
+      {
+        name: 'Mariacka Street',
+        desc: 'A short, atmospheric lane lined with raised stone terraces and amber workshops. The view down the street toward St Mary\'s Gate is the postcard shot.',
+        meta: '~14 min walk · free',
+      },
+      {
+        name: 'Gdańsk Crane (Żuraw)',
+        desc: 'The medieval timber-and-brick port crane on the Motława embankment — once the largest in Europe — now part of the National Maritime Museum.',
+        meta: '~18 min walk · ~30 PLN',
+      },
+    ],
+  },
+  {
+    id: 'museums',
+    title: 'Museums',
+    intro:
+      "Gdańsk has serious museums. If you only have time for one, make it the European Solidarity Centre — it tells the story of how a strike at the local shipyard in 1980 ended up dismantling a political bloc.",
+    items: [
+      {
+        name: 'European Solidarity Centre (ECS)',
+        desc: 'A striking weathered-steel building beside the historic shipyard gates. The permanent exhibition takes you from the 1970 protests through the round-table talks of 1989. Allow at least two hours; the rooftop café has the best view in the city.',
+        meta: '~25 min walk · 30 PLN',
+      },
+      {
+        name: 'Museum of the Second World War',
+        desc: 'A monumental concrete tower leaning over a sunken plaza on the Motława. The exhibition is exhausting in the best sense — global in scope, intimate in detail.',
+        meta: '~22 min walk · 25 PLN',
+      },
+      {
+        name: 'Amber Museum',
+        desc: 'Housed in a restored mill on the Radunia canal. Sounds niche; is in fact a brisk, well-curated tour through 40 million years of fossilised resin and the trade routes that ran on it.',
+        meta: '~16 min walk · 20 PLN',
+      },
+    ],
+  },
+  {
+    id: 'eat-drink',
+    title: 'Eat & drink',
+    intro:
+      "Pomeranian food leans into the sea, the forest, and the smokehouse. Reservations are sensible on the Monday night of the conference — phone or use the restaurants' websites.",
+    items: [
+      {
+        name: 'Pierogarnia Mandu',
+        desc: 'Classic and inventive pierogi, made by hand in front of you through a glass wall. The duck-and-mushroom and the spinach-with-pine-nut are both excellent. Order at least two plates per person.',
+        meta: '~14 min walk · ~70 PLN/person',
+      },
+      {
+        name: 'Velevetka',
+        desc: 'Modern Kashubian cooking — the cuisine of the Pomeranian coast — in a quiet dining room two streets back from the main drag. Try the smoked-trout starter.',
+        meta: '~12 min walk · ~150 PLN/person',
+      },
+      {
+        name: 'Gvara',
+        desc: 'A more relaxed Kashubian bistro from the same school of thinking. Excellent pickles, good local beer, fair prices. Good lunch option as well as dinner.',
+        meta: '~13 min walk · ~90 PLN/person',
+      },
+      {
+        name: 'Józef K',
+        desc: 'A bookish basement cocktail bar named after the Kafka character, with a strong local-spirits list and well-mixed classics. The right place for the post-talk argument.',
+        meta: '~15 min walk · drinks ~25-40 PLN',
+      },
+    ],
+  },
+  {
+    id: 'day-trips',
+    title: 'Day trips',
+    intro:
+      "If you arrive a day early or stay over, three trips repay the journey. All are easy on public transport — the Tricity SKM commuter train runs every few minutes from Gdańsk Główny.",
+    items: [
+      {
+        name: 'Sopot',
+        desc: 'The Baltic spa town twenty minutes north. Long sandy beach, the longest wooden pier in Europe, and Monte Cassino street for cafés and people-watching. Easy half-day.',
+        meta: '~25 min by SKM train · ~6 PLN single',
+      },
+      {
+        name: 'Malbork Castle',
+        desc: 'The largest brick castle in the world — the former headquarters of the Teutonic Knights. The audio tour is genuinely good. Allow a full day including travel.',
+        meta: '~50 min by train · ~70 PLN entry',
+      },
+      {
+        name: 'Westerplatte',
+        desc: 'The narrow peninsula where the first shots of the Second World War were fired on 1 September 1939. Open-air memorial site, sober and worth the journey. Tram and water-tram both work.',
+        meta: '~30 min by water-tram · free',
+      },
+    ],
+  },
+];
+---
+
+<Base
+  title="Things to do in Gdańsk — PGConf Poland 2026"
+  description="A short visitor guide to Gdańsk for PGConf Poland 2026 attendees: Old Town, museums, food, and day trips."
+>
+  <section class="section hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Visitor guide</p>
+          <h1 class="display-headline">Gdańsk, after the talks.</h1>
+        </div>
+        <div>
+          <p class="lede">
+            The conference is one day. Many of you will be in town for two or three.
+            Gdańsk repays exploring on foot — the Old Town, the shipyard, the
+            Baltic itself a short tram ride away. Here is what we would recommend.
+          </p>
+        </div>
+      </div>
+      <nav class="page-nav" aria-label="On this page">
+        {sections.map((s) => (
+          <a href={`#${s.id}`}>{s.title}</a>
+        ))}
+      </nav>
+    </div>
+  </section>
+
+  {sections.map((s, i) => (
+    <section class={`section ttd-section ${i % 2 === 0 ? 'ttd-section--a' : 'ttd-section--b'}`} id={s.id}>
+      <div class="container ttd-grid">
+        <div class="ttd-side">
+          <p class="ttd-num">{String(i + 1).padStart(2, '0')}</p>
+          <h2 class="ttd-title">{s.title}</h2>
+          <div class="rule"></div>
+          <p class="ttd-intro">{s.intro}</p>
+        </div>
+        <ul class="ttd-list">
+          {s.items.map((it) => (
+            <li class="ttd-item">
+              <h3 class="ttd-item__name">{it.name}</h3>
+              <p class="ttd-item__desc">{it.desc}</p>
+              <p class="ttd-item__meta">{it.meta}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  ))}
+
+  <section class="section ttd-foot">
+    <div class="container container--narrow center">
+      <div class="rule rule--center"></div>
+      <p class="muted">
+        Distances are measured on foot from ARCHE Dwór Uphagena Gdańsk, ul. Prof. Z. Kieturakisa 1.
+        Prices are approximate and meant for trip-planning, not budgeting.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero { padding-bottom: var(--space-10); }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: var(--space-12);
+    align-items: end;
+    margin-bottom: var(--space-12);
+  }
+  @media (max-width: 800px) { .hero-grid { grid-template-columns: 1fr; gap: var(--space-6); } }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: var(--ls-eyebrow);
+    font-size: var(--fs-xs);
+    color: var(--color-gold);
+    margin: 0 0 var(--space-4);
+  }
+  .display-headline {
+    font-family: var(--font-display);
+    font-size: var(--fs-4xl);
+    font-weight: 400;
+    color: var(--color-fg-strong);
+    margin: 0;
+    line-height: var(--lh-tight);
+    letter-spacing: var(--ls-tight);
+  }
+  .lede {
+    font-family: var(--font-display);
+    font-size: var(--fs-xl);
+    color: var(--color-fg);
+    line-height: var(--lh-snug);
+    margin: 0;
+    font-weight: 300;
+  }
+
+  .page-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3) var(--space-6);
+    border-top: 1px solid var(--color-border);
+    padding-top: var(--space-6);
+  }
+  .page-nav a {
+    font-family: var(--font-mono);
+    font-size: var(--fs-sm);
+    color: var(--color-fg-muted);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: var(--ls-wide);
+  }
+  .page-nav a:hover { color: var(--color-gold); }
+
+  .ttd-section--a { background: var(--color-bg); }
+  .ttd-section--b { background: var(--color-bg-sunken); }
+
+  .ttd-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: var(--space-16);
+    align-items: start;
+  }
+  @media (max-width: 800px) {
+    .ttd-grid { grid-template-columns: 1fr; gap: var(--space-8); }
+  }
+
+  .ttd-side { position: sticky; top: var(--space-16); }
+  @media (max-width: 800px) { .ttd-side { position: static; } }
+
+  .ttd-num {
+    font-family: var(--font-mono);
+    color: var(--color-gold);
+    font-size: var(--fs-sm);
+    margin: 0 0 var(--space-3);
+    letter-spacing: var(--ls-wide);
+  }
+  .ttd-title {
+    font-family: var(--font-display);
+    font-size: var(--fs-3xl);
+    color: var(--color-fg-strong);
+    font-weight: 400;
+    margin: 0 0 var(--space-3);
+    letter-spacing: var(--ls-tight);
+    line-height: var(--lh-tight);
+  }
+  .rule {
+    width: 80px; height: 2px;
+    background: linear-gradient(90deg, var(--color-gold), transparent);
+    margin: 0 0 var(--space-6);
+  }
+  .ttd-intro {
+    font-family: var(--font-sans);
+    color: var(--color-fg);
+    line-height: var(--lh-base);
+    margin: 0;
+    font-size: var(--fs-base);
+  }
+
+  .ttd-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+  .ttd-item {
+    border-left: 1px solid var(--color-border);
+    padding-left: var(--space-6);
+    transition: border-color var(--dur-base);
+  }
+  .ttd-item:hover { border-left-color: var(--color-gold); }
+  .ttd-item__name {
+    font-family: var(--font-display);
+    font-size: var(--fs-xl);
+    font-weight: 500;
+    color: var(--color-fg-strong);
+    margin: 0 0 var(--space-2);
+  }
+  .ttd-item__desc {
+    color: var(--color-fg-muted);
+    line-height: var(--lh-base);
+    margin: 0 0 var(--space-3);
+    max-width: 60ch;
+  }
+  .ttd-item__meta {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: var(--ls-eyebrow);
+    font-size: var(--fs-xs);
+    color: var(--color-gold);
+    margin: 0;
+  }
+
+  .ttd-foot { background: var(--color-bg); padding-block: var(--space-12); }
+  .rule--center {
+    width: 80px; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+    margin: 0 auto var(--space-6);
+  }
+  .muted { color: var(--color-fg-muted); font-size: var(--fs-sm); line-height: var(--lh-base); }
+  .center { text-align: center; }
+</style>

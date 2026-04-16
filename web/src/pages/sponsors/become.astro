@@ -1,0 +1,171 @@
+---
+import Base from '~/layouts/Base.astro';
+
+const tiers = [
+  {
+    name: 'Platinum',
+    price: '50 000 PLN',
+    accent: 'platinum',
+    benefits: [
+      '1 keynote slot (20 min) on the main stage',
+      'Premium booth in Sala Bastion Miś',
+      '6 conference tickets',
+      'Top logo placement on website, badges, and signage',
+      'Sponsored coffee break or lunch (your choice)',
+      'Inclusion in pre-event email + social posts',
+    ],
+  },
+  {
+    name: 'Gold',
+    price: '25 000 PLN',
+    accent: 'gold',
+    benefits: [
+      'Standard booth in Sala Bastion Miś',
+      '4 conference tickets',
+      'Prominent logo on website + signage',
+      'Sponsor mention in opening remarks',
+      'Inclusion in pre-event email',
+    ],
+  },
+  {
+    name: 'Silver',
+    price: '12 000 PLN',
+    accent: 'silver',
+    benefits: [
+      '2 conference tickets',
+      'Logo on website + signage',
+      'Sponsor mention in opening remarks',
+    ],
+  },
+  {
+    name: 'Community',
+    price: '4 000 PLN',
+    accent: 'community',
+    benefits: [
+      '1 conference ticket',
+      'Logo on website',
+      'For non-profits, user groups, and early-stage startups',
+    ],
+  },
+];
+---
+<Base
+  title="Become a Sponsor — PGConf Poland 2026"
+  description="Sponsorship tiers and benefits for PGConf Poland 2026. Reach the European PostgreSQL community at the historic Dwór Uphagena venue in Gdańsk."
+>
+  <section class="section section--hero">
+    <div class="container">
+      <p class="eyebrow">Become a Sponsor</p>
+      <h1 class="page-title">Stand with the people who run PostgreSQL.</h1>
+      <p class="lede">
+        PGConf Poland 2026 brings together database engineers, SREs, data platform leads, and
+        decision-makers from across the European PostgreSQL ecosystem. Sponsors get direct access
+        to a focused, technical audience for one full day in a historic Gdańsk venue.
+      </p>
+      <span class="rule rule--gold" aria-hidden="true"></span>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="tiers">
+        {tiers.map((t) => (
+          <article class="tier" data-tier={t.accent}>
+            <header>
+              <h2 class="tier__name">{t.name}</h2>
+              <p class="tier__price">{t.price}</p>
+            </header>
+            <ul class="tier__benefits">
+              {t.benefits.map((b) => <li>{b}</li>)}
+            </ul>
+          </article>
+        ))}
+      </div>
+
+      <div class="cta">
+        <a class="btn btn--primary" href="mailto:sponsors@pgconf.pl?subject=PGConf%20Poland%202026%20sponsorship">
+          Get the sponsor pack
+        </a>
+        <p class="cta__note">We will reply within two working days with the deck, logo specs, and contract template.</p>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .tiers {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+    margin-bottom: var(--space-10);
+  }
+  @media (min-width: 720px)  { .tiers { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1080px) { .tiers { grid-template-columns: repeat(4, 1fr); } }
+
+  .tier {
+    background: var(--color-bg-elev);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    position: relative;
+    overflow: hidden;
+  }
+  .tier::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--color-gold);
+  }
+  .tier[data-tier="platinum"]::before { background: linear-gradient(90deg, #d4a93a, #f7e9b8, #d4a93a); }
+  .tier[data-tier="gold"]::before     { background: var(--color-gold); }
+  .tier[data-tier="silver"]::before   { background: rgba(255,255,255,0.6); }
+  .tier[data-tier="community"]::before { background: var(--color-red, #d8232a); }
+
+  .tier__name {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    margin: 0;
+    color: var(--color-fg);
+  }
+  .tier__price {
+    font-family: var(--font-mono);
+    font-size: 1.05rem;
+    color: var(--color-gold);
+    margin: 0;
+    letter-spacing: 0.04em;
+  }
+  .tier__benefits {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .tier__benefits li {
+    padding-left: 1.25rem;
+    position: relative;
+    line-height: 1.55;
+    color: var(--color-fg-muted, var(--color-fg));
+    font-size: 0.95rem;
+  }
+  .tier__benefits li::before {
+    content: '◆';
+    position: absolute;
+    left: 0;
+    color: var(--color-gold);
+    font-size: 0.65em;
+    top: 0.45em;
+  }
+
+  .cta { text-align: center; }
+  .cta__note {
+    margin-top: var(--space-3);
+    color: var(--color-fg-muted);
+    font-size: 0.9rem;
+  }
+</style>

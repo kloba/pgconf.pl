@@ -1,0 +1,160 @@
+/*
+ * effects.css — decorative layers (grain, glows, gold rules, focus)
+ */
+
+/* ---------- FILM GRAIN OVERLAY ----------
+   SVG turbulence as data-uri, fixed viewport overlay,
+   ignores pointer events, sits below modals.
+*/
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: var(--z-grain);
+  mix-blend-mode: overlay;
+  opacity: 0.18;
+  background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.95 0 0 0 0 0.85 0 0 0 0 0.55 0 0 0 0.45 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-size: 220px 220px;
+}
+
+/* Subtler inline grain for cards / sections */
+.grain-soft {
+  position: relative;
+}
+.grain-soft::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.08;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-size: 140px 140px;
+  border-radius: inherit;
+}
+
+/* ---------- RADIAL GOLD GLOW (hero background) ---------- */
+.glow-gold {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 60% 50% at 70% 30%, rgba(212,169,58,0.18) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 60% at 20% 80%, rgba(216,35,42,0.10) 0%, transparent 65%),
+    radial-gradient(ellipse 100% 80% at 50% 100%, rgba(0,87,184,0.08) 0%, transparent 70%);
+}
+.glow-gold--center {
+  background:
+    radial-gradient(ellipse 50% 50% at 50% 50%, rgba(212,169,58,0.22) 0%, transparent 70%);
+}
+
+/* Vignette to anchor edges */
+.vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse 100% 80% at 50% 50%, transparent 50%, rgba(0,0,0,0.5) 100%);
+}
+
+/* ---------- DECORATIVE GOLD BORDER ---------- */
+.gold-rule {
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--color-border-strong) 15%,
+    var(--color-gold) 50%,
+    var(--color-border-strong) 85%,
+    transparent 100%
+  );
+  position: relative;
+}
+.gold-rule::before, .gold-rule::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 6px; height: 6px;
+  transform: translateY(-50%) rotate(45deg);
+  background: var(--color-gold);
+  box-shadow: 0 0 12px var(--color-gold);
+}
+.gold-rule::before { left: calc(50% - 60px); }
+.gold-rule::after  { left: calc(50% + 54px); }
+
+/* Heraldic divider for footer (with grain woven in) */
+.gold-rule--heraldic {
+  height: 2px;
+  background:
+    linear-gradient(90deg,
+      transparent 0%,
+      var(--color-gold-warm) 10%,
+      var(--color-gold-bright) 50%,
+      var(--color-gold-warm) 90%,
+      transparent 100%);
+  box-shadow: 0 0 18px -4px var(--color-gold);
+}
+
+/* ---------- FOCUS RING ---------- */
+:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+.focus-pill:focus-visible {
+  outline-offset: 6px;
+  border-radius: var(--radius-pill);
+}
+
+/* ---------- GLOWING EDGE (registration callout) ---------- */
+.edge-glow {
+  position: relative;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: linear-gradient(180deg, rgba(212,169,58,0.06) 0%, rgba(216,35,42,0.04) 100%);
+}
+.edge-glow::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(90deg,
+    var(--color-gold-warm),
+    var(--color-gold-bright),
+    var(--color-red),
+    var(--color-gold-bright),
+    var(--color-gold-warm));
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.55;
+}
+
+/* ---------- GEOMETRIC PATTERN BG (hero) ---------- */
+.geo-pattern {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.10;
+  background-image:
+    linear-gradient(45deg, transparent 48%, rgba(212,169,58,0.5) 49%, rgba(212,169,58,0.5) 51%, transparent 52%),
+    linear-gradient(-45deg, transparent 48%, rgba(245,236,214,0.18) 49%, rgba(245,236,214,0.18) 51%, transparent 52%);
+  background-size: 64px 64px, 64px 64px;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 80%);
+}
+
+/* ---------- REDUCED MOTION ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  html { scroll-behavior: auto !important; }
+  .grain-overlay { opacity: 0.10; }
+}

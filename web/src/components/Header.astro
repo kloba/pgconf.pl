@@ -1,0 +1,158 @@
+---
+import { Image } from 'astro:assets';
+import logo from '~/assets/logo.png';
+import { NAV_PRIMARY, CONFERENCE } from '~/lib/conference';
+import MobileNav from '~/components/MobileNav.astro';
+
+const current = Astro.url.pathname;
+const isActive = (href: string) =>
+  href === '/' ? current === '/' : current.startsWith(href);
+---
+<header id="site-header" class="site-header" data-scroll="top">
+  <div class="container site-header__inner">
+    <a href="/" class="site-header__brand" aria-label={`${CONFERENCE.name} — home`}>
+      <Image
+        src={logo}
+        alt=""
+        width={48}
+        height={48}
+        densities={[1, 2]}
+        loading="eager"
+        class="site-header__logo"
+      />
+      <span class="site-header__wordmark">
+        <span class="site-header__title">PGConf Poland</span>
+        <span class="site-header__year">2026</span>
+      </span>
+    </a>
+
+    <nav class="site-header__nav" aria-label="Primary">
+      <ul>
+        {NAV_PRIMARY.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              class={`site-header__link ${isActive(item.href) ? 'is-active' : ''}`}
+              aria-current={isActive(item.href) ? 'page' : undefined}
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <MobileNav items={NAV_PRIMARY} />
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-header);
+    width: 100%;
+    background: transparent;
+    transition: background-color var(--dur-base) var(--ease-out-quart),
+                backdrop-filter var(--dur-base) var(--ease-out-quart),
+                border-color var(--dur-base) var(--ease-out-quart);
+    border-bottom: 1px solid transparent;
+  }
+  .site-header[data-scroll="scrolled"] {
+    background: rgba(10, 20, 40, 0.78);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    border-bottom-color: var(--color-border);
+  }
+
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-8);
+    padding-block: var(--space-4);
+  }
+
+  .site-header__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    flex-shrink: 0;
+  }
+  .site-header__logo {
+    width: 44px;
+    height: 44px;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.45));
+  }
+  .site-header__wordmark {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+  }
+  .site-header__title {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--color-fg-strong);
+    letter-spacing: -0.01em;
+    font-variation-settings: 'opsz' 24, 'SOFT' 40;
+  }
+  .site-header__year {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: var(--ls-eyebrow);
+    color: var(--color-gold);
+    margin-top: 2px;
+  }
+
+  .site-header__nav {
+    display: none;
+  }
+  @media (min-width: 1024px) {
+    .site-header__nav { display: block; }
+  }
+  .site-header__nav ul {
+    display: flex;
+    list-style: none;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+  }
+  .site-header__link {
+    position: relative;
+    display: inline-block;
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--fs-sm);
+    font-weight: 400;
+    color: var(--color-fg-muted);
+    transition: color var(--dur-fast) var(--ease-out-quart);
+  }
+  .site-header__link::after {
+    content: '';
+    position: absolute;
+    left: var(--space-3);
+    right: 100%;
+    bottom: 2px;
+    height: 1px;
+    background: var(--color-gold);
+    transition: right var(--dur-base) var(--ease-out-quart);
+  }
+  .site-header__link:hover,
+  .site-header__link.is-active { color: var(--color-fg-strong); }
+  .site-header__link:hover::after,
+  .site-header__link.is-active::after { right: var(--space-3); }
+</style>
+
+<script>
+  // Sticky header backdrop on scroll
+  const header = document.getElementById('site-header');
+  if (header) {
+    const onScroll = () => {
+      header.dataset.scroll = window.scrollY > 16 ? 'scrolled' : 'top';
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    document.addEventListener('astro:after-swap', onScroll);
+  }
+</script>

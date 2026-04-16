@@ -1,0 +1,453 @@
+---
+import Base from '~/layouts/Base.astro';
+
+const ticketUrl = 'https://ti.to/postgresql-europe/pgconf-poland-2026';
+
+const tiers = [
+  {
+    name: 'Early Bird',
+    price: '599 PLN',
+    window: 'On sale until 15 September 2026',
+    note: 'Limited allocation. Closes earlier if sold out.',
+    highlighted: false,
+  },
+  {
+    name: 'Regular',
+    price: '799 PLN',
+    window: '16 September — 14 November 2026',
+    note: 'Standard rate for the public sale window.',
+    highlighted: true,
+  },
+  {
+    name: 'Late / On-site',
+    price: '999 PLN',
+    window: 'From 15 November 2026 and at the door',
+    note: 'Subject to remaining capacity — not guaranteed.',
+    highlighted: false,
+  },
+  {
+    name: 'Student',
+    price: '199 PLN',
+    window: 'Available throughout the sale period',
+    note: 'Valid student ID required at registration.',
+    highlighted: false,
+  },
+];
+---
+
+<Base
+  title="Your Attendance — PGConf Poland 2026"
+  description="Tickets, what is included, and the refund and transfer policy for PGConf Poland 2026 in Gdańsk on 24 November 2026."
+>
+  <section class="section section--hero">
+    <div class="container">
+      <p class="eyebrow">Your attendance</p>
+      <h1 class="page-title">Pick a seat. Sixty in total.</h1>
+      <p class="lede">
+        PGConf Poland 2026 is a small conference by design — sixty attendees, one room, one day in
+        Gdańsk. Tickets cover the full programme, the workshop, lunch, coffee breaks and the welcome
+        reception. We sell them in three windows plus a discounted student rate.
+      </p>
+      <a class="btn btn--primary" href={ticketUrl} rel="noopener" target="_blank">
+        Buy tickets
+        <span aria-hidden="true">→</span>
+      </a>
+      <p class="note">
+        Tickets are sold via Tito on behalf of PostgreSQL Europe. VAT is included in every price quoted
+        below.
+      </p>
+      <span class="rule rule--gold" aria-hidden="true"></span>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">Ticket types</h2>
+      <span class="rule rule--gold rule--sm" aria-hidden="true"></span>
+      <div class="tiers">
+        {tiers.map((tier) => (
+          <article class={`tier${tier.highlighted ? ' tier--featured' : ''}`}>
+            {tier.highlighted && <p class="tier__badge">Most common</p>}
+            <h3 class="tier__name">{tier.name}</h3>
+            <p class="tier__price">{tier.price}</p>
+            <p class="tier__window">{tier.window}</p>
+            <p class="tier__note">{tier.note}</p>
+          </article>
+        ))}
+      </div>
+      <p class="footnote">
+        Group bookings of five or more from the same organisation: write to
+        <a href="mailto:hello@pgconf.pl" class="link-arrow">hello@pgconf.pl</a> before purchase and we
+        will issue a single combined invoice.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container grid grid--two">
+      <div>
+        <h2 class="section-title">What is included</h2>
+        <span class="rule rule--gold rule--sm" aria-hidden="true"></span>
+        <ul class="bullets">
+          <li>Full day of main-track talks in Sala Bastion Miś.</li>
+          <li>Access to the parallel hands-on workshop in Sala "U Profesora B" (subject to seats).</li>
+          <li>Buffet lunch with vegetarian, vegan and gluten-free options on request.</li>
+          <li>Two staffed coffee breaks — espresso, filter, tea, water and pastries.</li>
+          <li>Welcome reception in the evening with a drink and light food.</li>
+          <li>Conference badge, lanyard and printed programme.</li>
+          <li>Access to the sponsor area in the Spiżarnia room throughout the day.</li>
+        </ul>
+      </div>
+      <aside class="card card--gold">
+        <h3 class="card-title">Not included</h3>
+        <ul class="bullets bullets--compact">
+          <li>Travel to Gdańsk.</li>
+          <li>Accommodation — recommendations are published on the Travel page closer to the event.</li>
+          <li>Visa fees. We provide invitation letters on request — see the Visa Letter page.</li>
+          <li>Spending money for the evening after the welcome reception.</li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">Refunds and transfers</h2>
+      <span class="rule rule--gold rule--sm" aria-hidden="true"></span>
+      <ol class="policy">
+        <li>
+          <span class="policy__date">Until 15 October 2026</span>
+          <p>
+            Cancel for any reason and receive a <strong>full refund</strong> to the original payment
+            method. Refunds are processed within ten working days.
+          </p>
+        </li>
+        <li>
+          <span class="policy__date">16 October — 1 November 2026</span>
+          <p>
+            <strong>50 % refund</strong> on cancellation. The remaining 50 % covers commitments already
+            made to the venue and caterers based on confirmed headcount.
+          </p>
+        </li>
+        <li>
+          <span class="policy__date">From 2 November 2026</span>
+          <p>
+            <strong>No refunds</strong>, but tickets remain transferable up to seven days before the
+            event — see below.
+          </p>
+        </li>
+        <li>
+          <span class="policy__date">Up to 17 November 2026</span>
+          <p>
+            <strong>Free transfer</strong> of your ticket to another attendee. Email
+            <a href="mailto:hello@pgconf.pl" class="link-arrow">hello@pgconf.pl</a> with the new
+            attendee's name, email and any dietary requirements; we update the badge before the day.
+          </p>
+        </li>
+      </ol>
+      <p class="footnote">
+        If the event is cancelled or postponed for reasons inside our control, all attendees receive a
+        full refund regardless of when the cancellation is announced.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container cta-block">
+      <h2 class="section-title">Ready to register?</h2>
+      <span class="rule rule--gold rule--sm" aria-hidden="true"></span>
+      <p>
+        Sale opens on the published Early Bird date. You will receive a confirmation email immediately
+        and a digital badge a week before the conference.
+      </p>
+      <a class="btn btn--primary" href={ticketUrl} rel="noopener" target="_blank">
+        Buy tickets
+        <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .section {
+    padding-block: clamp(3.5rem, 7vw, 6rem);
+  }
+  .section--alt {
+    background: var(--color-bg-elev);
+    border-block: 1px solid var(--color-border);
+  }
+  .section--hero {
+    padding-block: clamp(5rem, 10vw, 8rem) clamp(2.5rem, 5vw, 4rem);
+  }
+  .container {
+    max-width: 72rem;
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 4vw, 2.5rem);
+  }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    margin: 0 0 1.25rem;
+  }
+  .page-title {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(2.5rem, 6vw, 4.25rem);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    margin: 0 0 1.5rem;
+    max-width: 22ch;
+  }
+  .lede {
+    font-size: clamp(1.075rem, 1.6vw, 1.25rem);
+    line-height: 1.55;
+    color: var(--color-fg-muted);
+    max-width: 60ch;
+    margin: 0 0 2rem;
+  }
+  .section-title {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    letter-spacing: -0.005em;
+    margin: 0 0 0.75rem;
+  }
+  .rule {
+    display: block;
+    height: 1px;
+    background: linear-gradient(90deg, var(--color-gold), transparent);
+    margin: 0.25rem 0 2rem;
+  }
+  .rule--gold {
+    width: 8rem;
+    background: linear-gradient(90deg, var(--color-gold), var(--color-gold-warm), transparent);
+    height: 2px;
+  }
+  .rule--sm {
+    width: 4rem;
+    margin-bottom: 2.5rem;
+  }
+  p {
+    color: var(--color-fg-muted);
+    line-height: 1.65;
+    margin: 0 0 1rem;
+    max-width: 62ch;
+  }
+  .note {
+    font-size: 0.875rem;
+    color: var(--color-fg-muted);
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+  .footnote {
+    font-size: 0.875rem;
+    color: var(--color-fg-muted);
+    margin-top: 1.25rem;
+    font-style: italic;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.85rem 1.4rem;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: 0.01em;
+    border: 1px solid var(--color-gold);
+    color: var(--color-bg);
+    background: var(--color-gold);
+    text-decoration: none;
+    transition: background 160ms ease, color 160ms ease, transform 160ms ease;
+  }
+  .btn:hover {
+    background: var(--color-gold-warm);
+    border-color: var(--color-gold-warm);
+    transform: translateY(-1px);
+  }
+  .btn:focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 3px;
+  }
+  .tiers {
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 40rem) {
+    .tiers {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 64rem) {
+    .tiers {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  .tier {
+    border: 1px solid var(--color-border);
+    background: var(--color-bg-elev);
+    padding: 1.5rem 1.25rem 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    position: relative;
+  }
+  .tier--featured {
+    border-color: var(--color-gold);
+    box-shadow: inset 0 -2px 0 0 var(--color-gold);
+  }
+  .tier__badge {
+    position: absolute;
+    top: -0.65rem;
+    left: 1.25rem;
+    background: var(--color-gold);
+    color: var(--color-bg);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.55rem;
+    margin: 0;
+  }
+  .tier__name {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 1.2rem;
+    margin: 0;
+    color: var(--color-fg);
+  }
+  .tier__price {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    line-height: 1;
+    color: var(--color-gold);
+    margin: 0.25rem 0 0.5rem;
+  }
+  .tier__window {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--color-fg-muted);
+    letter-spacing: 0.05em;
+    margin: 0;
+  }
+  .tier__note {
+    font-size: 0.875rem;
+    color: var(--color-fg-muted);
+    margin: 0.5rem 0 0;
+    border-top: 1px solid var(--color-border);
+    padding-top: 0.75rem;
+  }
+  .grid {
+    display: grid;
+    gap: clamp(2rem, 4vw, 3.5rem);
+  }
+  .grid--two {
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 56rem) {
+    .grid--two {
+      grid-template-columns: 1.4fr 1fr;
+      align-items: start;
+    }
+  }
+  .bullets {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.75rem;
+  }
+  .bullets--compact {
+    gap: 0.5rem;
+  }
+  .bullets li {
+    position: relative;
+    padding-left: 1.5rem;
+    color: var(--color-fg-muted);
+    line-height: 1.55;
+  }
+  .bullets li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.65em;
+    width: 0.6rem;
+    height: 1px;
+    background: var(--color-gold);
+  }
+  .card {
+    border: 1px solid var(--color-border);
+    background: var(--color-bg);
+    padding: 1.75rem;
+    position: relative;
+  }
+  .card--gold::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-top: 2px solid var(--color-gold);
+    pointer-events: none;
+  }
+  .card-title {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 1.25rem;
+    margin: 0 0 1rem;
+    color: var(--color-fg);
+  }
+  .policy {
+    list-style: none;
+    counter-reset: step;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0;
+    max-width: 56rem;
+  }
+  .policy li {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.4rem;
+    padding: 1.25rem 0;
+    border-top: 1px solid var(--color-border);
+  }
+  @media (min-width: 44rem) {
+    .policy li {
+      grid-template-columns: 14rem 1fr;
+      gap: 2rem;
+      align-items: baseline;
+    }
+  }
+  .policy li:last-child {
+    border-bottom: 1px solid var(--color-border);
+  }
+  .policy__date {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--color-gold);
+    letter-spacing: 0.04em;
+  }
+  .policy p {
+    font-size: 0.95rem;
+    margin: 0;
+  }
+  .policy strong {
+    color: var(--color-fg);
+    font-weight: 600;
+  }
+  .cta-block {
+    max-width: 48rem;
+  }
+  .link-arrow {
+    color: var(--color-gold);
+    text-decoration: none;
+    border-bottom: 1px solid color-mix(in oklab, var(--color-gold) 35%, transparent);
+  }
+  .link-arrow:hover {
+    border-bottom-color: var(--color-gold);
+  }
+</style>

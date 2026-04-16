@@ -1,0 +1,43 @@
+# specs (planning artifacts, kept local)
+specs/
+
+# deps
+node_modules/
+.pnpm-store/
+
+# build output
+dist/
+.astro/
+.svelte-kit/
+.next/
+
+# Azure Functions
+api/dist/
+api/bin/
+api/obj/
+local.settings.json
+.azure/
+
+# env
+.env
+.env.*
+!.env.example
+
+# logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# editor / OS
+.DS_Store
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
+
+# test
+coverage/
+.nyc_output/
+
+# misc
+*.tsbuildinfo

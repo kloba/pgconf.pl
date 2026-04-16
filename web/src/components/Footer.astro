@@ -1,0 +1,179 @@
+---
+import { Image } from 'astro:assets';
+import logo from '~/assets/logo.png';
+import { CONFERENCE, NAV_FOOTER } from '~/lib/conference';
+const year = new Date().getFullYear();
+---
+<footer class="site-footer">
+  <div class="container">
+    <div class="gold-rule gold-rule--heraldic site-footer__rule"></div>
+
+    <div class="site-footer__grid">
+      <section class="site-footer__col site-footer__identity">
+        <div class="site-footer__brand">
+          <Image
+            src={logo}
+            alt=""
+            width={64}
+            height={64}
+            densities={[1, 2]}
+            loading="lazy"
+            class="site-footer__logo"
+          />
+          <div>
+            <p class="site-footer__title">PGConf Poland 2026</p>
+            <p class="site-footer__subtitle">{CONFERENCE.dateLabel} · {CONFERENCE.venue.city}</p>
+          </div>
+        </div>
+        <p class="site-footer__org">
+          PGConf Poland 2026 is organised by
+          <a href={CONFERENCE.organiser.url} class="link-reveal" target="_blank" rel="noopener">
+            {CONFERENCE.organiser.name}
+          </a>.
+        </p>
+        <p class="site-footer__org-meta">{CONFERENCE.organiser.address}</p>
+      </section>
+
+      <section class="site-footer__col">
+        <h3 class="site-footer__heading">Explore</h3>
+        <ul class="site-footer__nav">
+          {NAV_FOOTER.map((item) => (
+            <li><a href={item.href} class="link-reveal">{item.label}</a></li>
+          ))}
+        </ul>
+      </section>
+
+      <section class="site-footer__col">
+        <h3 class="site-footer__heading">Contact</h3>
+        <ul class="site-footer__nav">
+          <li>
+            <a href={`mailto:${CONFERENCE.contactEmail}`} class="link-reveal">
+              {CONFERENCE.contactEmail}
+            </a>
+          </li>
+          <li>
+            <a href={CONFERENCE.social.mastodon} class="link-reveal" rel="me noopener" target="_blank">
+              Mastodon
+            </a>
+          </li>
+          <li>
+            <a href={CONFERENCE.social.linkedin} class="link-reveal" rel="noopener" target="_blank">
+              LinkedIn
+            </a>
+          </li>
+        </ul>
+      </section>
+    </div>
+
+    <div class="site-footer__legal">
+      <p>© {year} PostgreSQL Europe. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    position: relative;
+    background: linear-gradient(180deg, var(--color-bg) 0%, var(--color-bg-sunken) 100%);
+    padding-block: var(--space-16) var(--space-8);
+    margin-top: var(--space-24);
+    color: var(--color-fg-muted);
+  }
+  .site-footer__rule {
+    margin-bottom: var(--space-16);
+  }
+
+  .site-footer__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-12);
+  }
+  @media (min-width: 768px) {
+    .site-footer__grid {
+      grid-template-columns: 1.4fr 1fr 1fr;
+      gap: var(--space-16);
+    }
+  }
+
+  .site-footer__col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .site-footer__brand {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+  }
+  .site-footer__logo {
+    width: 56px;
+    height: 56px;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5));
+  }
+  .site-footer__title {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    color: var(--color-fg-strong);
+    font-variation-settings: 'opsz' 36, 'SOFT' 50;
+  }
+  .site-footer__subtitle {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: var(--ls-eyebrow);
+    color: var(--color-gold);
+  }
+  .site-footer__org {
+    font-size: var(--fs-sm);
+    line-height: var(--lh-loose);
+    max-width: 36ch;
+    color: var(--color-fg-muted);
+  }
+  .site-footer__org-meta {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    color: var(--color-fg-faint);
+  }
+
+  .site-footer__heading {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: var(--ls-eyebrow);
+    color: var(--color-gold);
+    margin: 0;
+    font-weight: 500;
+  }
+
+  .site-footer__nav {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    font-size: var(--fs-sm);
+    color: var(--color-fg);
+  }
+
+  .site-footer__legal {
+    margin-top: var(--space-16);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--color-border-cool);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    color: var(--color-fg-faint);
+    letter-spacing: var(--ls-wide);
+  }
+  @media (min-width: 768px) {
+    .site-footer__legal {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+</style>
