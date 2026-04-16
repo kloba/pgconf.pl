@@ -15,6 +15,7 @@ dist/
 api/dist/
 api/bin/
 api/obj/
+api-deploy/
 local.settings.json
 .azure/
 
