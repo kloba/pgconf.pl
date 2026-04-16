@@ -176,40 +176,13 @@ const dateFmt = new Intl.DateTimeFormat('en-GB', {
         </article>
 
         <aside class="details-rooms">
-          <div
-            class="details-map"
-            data-map-embed={`https://www.openstreetmap.org/export/embed.html?bbox=${CONFERENCE.venue.longitude - 0.006}%2C${CONFERENCE.venue.latitude - 0.003}%2C${CONFERENCE.venue.longitude + 0.006}%2C${CONFERENCE.venue.latitude + 0.003}&layer=mapnik&marker=${CONFERENCE.venue.latitude}%2C${CONFERENCE.venue.longitude}`}
-            data-map-title={`Map showing ${CONFERENCE.venue.name}`}
-          >
-            <button type="button" class="details-map__activate" aria-label={`Show interactive map of ${CONFERENCE.venue.name}`}>
-              <span class="details-map__preview" aria-hidden="true">
-                <svg viewBox="0 0 320 220" width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
-                  <defs>
-                    <linearGradient id="m-grad" x1="0" y1="0" x2="1" y2="1">
-                      <stop offset="0%" stop-color="#0d1730"/>
-                      <stop offset="100%" stop-color="#050b1a"/>
-                    </linearGradient>
-                    <pattern id="m-grid" width="20" height="20" patternUnits="userSpaceOnUse">
-                      <path d="M20 0 L0 0 0 20" fill="none" stroke="rgba(212,169,58,0.07)" stroke-width="0.5"/>
-                    </pattern>
-                  </defs>
-                  <rect width="320" height="220" fill="url(#m-grad)"/>
-                  <rect width="320" height="220" fill="url(#m-grid)"/>
-                  <path d="M0 70 L320 95" stroke="rgba(245,236,214,0.10)" stroke-width="6"/>
-                  <path d="M40 0 L60 220" stroke="rgba(245,236,214,0.08)" stroke-width="4"/>
-                  <path d="M180 0 L210 220" stroke="rgba(245,236,214,0.10)" stroke-width="5"/>
-                  <path d="M0 180 Q120 150 240 175 T320 165" stroke="rgba(0,87,184,0.45)" stroke-width="3" fill="none"/>
-                  <g transform="translate(170,100)">
-                    <circle r="22" fill="rgba(216,35,42,0.18)"/>
-                    <circle r="6" fill="#d8232a" stroke="#f0c75a" stroke-width="1.5"/>
-                  </g>
-                </svg>
-              </span>
-              <span class="details-map__cta">
-                <span class="details-map__cta-icon" aria-hidden="true">▶</span>
-                <span class="details-map__cta-text">Tap to load map</span>
-              </span>
-            </button>
+          <div class="details-map">
+            <iframe
+              src={`https://www.openstreetmap.org/export/embed.html?bbox=${CONFERENCE.venue.longitude - 0.006}%2C${CONFERENCE.venue.latitude - 0.003}%2C${CONFERENCE.venue.longitude + 0.006}%2C${CONFERENCE.venue.latitude + 0.003}&layer=mapnik&marker=${CONFERENCE.venue.latitude}%2C${CONFERENCE.venue.longitude}`}
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              title={`Map showing ${CONFERENCE.venue.name}`}
+            ></iframe>
             <a
               class="details-map__link"
               href={`https://www.openstreetmap.org/?mlat=${CONFERENCE.venue.latitude}&mlon=${CONFERENCE.venue.longitude}#map=17/${CONFERENCE.venue.latitude}/${CONFERENCE.venue.longitude}`}
@@ -217,32 +190,6 @@ const dateFmt = new Intl.DateTimeFormat('en-GB', {
               rel="noopener"
             >Open in OpenStreetMap ↗</a>
           </div>
-          <script is:inline>
-            (function () {
-              const init = () => {
-                document.querySelectorAll('.details-map').forEach((el) => {
-                  if (el.dataset.bound === '1') return;
-                  el.dataset.bound = '1';
-                  const btn = el.querySelector('.details-map__activate');
-                  if (!btn) return;
-                  btn.addEventListener('click', () => {
-                    const src = el.dataset.mapEmbed;
-                    const title = el.dataset.mapTitle ?? 'Map';
-                    if (!src) return;
-                    const iframe = document.createElement('iframe');
-                    iframe.src = src;
-                    iframe.title = title;
-                    iframe.loading = 'lazy';
-                    iframe.referrerPolicy = 'no-referrer-when-downgrade';
-                    iframe.style.cssText = 'width:100%;height:100%;border:0;display:block;filter:contrast(0.95) saturate(0.85);';
-                    btn.replaceWith(iframe);
-                  });
-                });
-              };
-              init();
-              document.addEventListener('astro:after-swap', init);
-            })();
-          </script>
 
           <div>
             <p class="details-rooms__label">Rooms in use</p>
@@ -658,56 +605,6 @@ const dateFmt = new Intl.DateTimeFormat('en-GB', {
     border: 0;
     display: block;
     filter: contrast(0.95) saturate(0.85);
-  }
-  .details-map__activate {
-    appearance: none;
-    background: transparent;
-    border: 0;
-    padding: 0;
-    margin: 0;
-    width: 100%;
-    height: 100%;
-    cursor: pointer;
-    color: inherit;
-    position: relative;
-    overflow: hidden;
-  }
-  .details-map__preview {
-    position: absolute;
-    inset: 0;
-    display: block;
-  }
-  .details-map__preview svg { display: block; }
-  .details-map__cta {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.6rem;
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    color: var(--color-gold);
-    background: linear-gradient(180deg, transparent 0%, rgba(7,14,28,0.6) 100%);
-    transition: background 200ms ease, color 200ms ease;
-  }
-  .details-map__cta-icon {
-    width: 28px; height: 28px;
-    border: 1px solid var(--color-gold);
-    border-radius: 50%;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.7em;
-    padding-left: 2px;
-    line-height: 1;
-  }
-  .details-map__activate:hover .details-map__cta,
-  .details-map__activate:focus-visible .details-map__cta {
-    background: rgba(7, 14, 28, 0.7);
-    color: var(--color-gold-warm, var(--color-gold));
   }
   .details-map__link {
     position: absolute;
