@@ -1,9 +1,9 @@
 ---
 import Base from '~/layouts/Base.astro';
+import { CONFERENCE } from '~/lib/conference';
 
-// ARCHE Dwór Uphagena, Gdańsk — approximate coordinates
-const lat = 54.3536;
-const lon = 18.6322;
+const lat = CONFERENCE.venue.latitude;
+const lon = CONFERENCE.venue.longitude;
 const delta = 0.004;
 const bbox = `${lon - delta}%2C${lat - delta}%2C${lon + delta}%2C${lat + delta}`;
 const mapSrc = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${lat}%2C${lon}`;

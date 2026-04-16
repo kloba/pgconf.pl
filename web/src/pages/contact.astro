@@ -1,5 +1,14 @@
 ---
 import Base from '~/layouts/Base.astro';
+import { CONFERENCE } from '~/lib/conference';
+
+const mastodonHandle = (() => {
+  try {
+    const u = new URL(CONFERENCE.social.mastodon);
+    const user = u.pathname.replace(/^\/@?/, '').replace(/\/$/, '');
+    return `@${user}@${u.hostname}`;
+  } catch { return CONFERENCE.social.mastodon; }
+})();
 ---
 
 <Base
@@ -52,9 +61,9 @@ import Base from '~/layouts/Base.astro';
         <span class="rule rule--gold rule--sm" aria-hidden="true"></span>
         <ul class="socials">
           <li>
-            <a href="https://fosstodon.org/@pgconfpl" rel="me noopener" target="_blank">
+            <a href={CONFERENCE.social.mastodon} rel="me noopener" target="_blank">
               <span class="socials__label">Mastodon</span>
-              <span class="socials__handle">@pgconfpl@fosstodon.org</span>
+              <span class="socials__handle">{mastodonHandle}</span>
             </a>
           </li>
           <li>

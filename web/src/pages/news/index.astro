@@ -1,0 +1,91 @@
+---
+import Base from '~/layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('news', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime(),
+);
+
+const dateFmt = new Intl.DateTimeFormat('en-GB', {
+  day: 'numeric', month: 'short', year: 'numeric',
+});
+---
+<Base
+  title="News — PGConf Poland 2026"
+  description="Announcements and updates from the PGConf Poland 2026 organising team."
+>
+  <section class="section section--hero">
+    <div class="container">
+      <p class="eyebrow">Despatches</p>
+      <h1 class="page-title">News &amp; updates</h1>
+      <p class="lede">Announcements from the organising team — Call for Papers, schedule, sponsors, travel, social events.</p>
+      <span class="rule rule--gold" aria-hidden="true"></span>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      {posts.length === 0 ? (
+        <p class="empty">Nothing yet — check back soon.</p>
+      ) : (
+        <ul class="news-list">
+          {posts.map((post) => (
+            <li class="news-item">
+              <p class="news-item__date">
+                <time datetime={post.data.date.toISOString()}>{dateFmt.format(post.data.date)}</time>
+              </p>
+              <h2 class="news-item__title">
+                <a href={`/news/${post.slug}`}>{post.data.title}</a>
+              </h2>
+              <p class="news-item__excerpt">{post.data.excerpt}</p>
+              <a href={`/news/${post.slug}`} class="link-reveal">Read more →</a>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .news-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+  .news-item {
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: var(--space-8);
+  }
+  .news-item:last-child { border-bottom: 0; }
+  .news-item__date {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--color-gold);
+    margin: 0 0 var(--space-2);
+  }
+  .news-item__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    margin: 0 0 var(--space-3);
+    line-height: 1.15;
+  }
+  .news-item__title a { color: var(--color-fg); text-decoration: none; }
+  .news-item__title a:hover { color: var(--color-gold); }
+  .news-item__excerpt {
+    color: var(--color-fg-muted);
+    margin: 0 0 var(--space-3);
+    max-width: 65ch;
+    line-height: 1.6;
+  }
+  .empty {
+    color: var(--color-fg-muted);
+    text-align: center;
+    padding: var(--space-12) 0;
+  }
+</style>
