@@ -28,6 +28,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Build shared contracts (needed for typecheck)
+        run: pnpm --filter @pgconf/contracts build
+
       - name: Lint
         run: pnpm lint
 
