@@ -2,25 +2,24 @@
   "name": "@pgconf/contracts",
   "version": "0.0.0",
   "private": true,
-  "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+      "default": "./dist/index.js"
     },
     "./cfp": {
       "types": "./dist/cfp.d.ts",
-      "import": "./dist/cfp.js"
+      "default": "./dist/cfp.js"
     },
     "./contact": {
       "types": "./dist/contact.d.ts",
-      "import": "./dist/contact.js"
+      "default": "./dist/contact.js"
     },
     "./newsletter": {
       "types": "./dist/newsletter.d.ts",
-      "import": "./dist/newsletter.js"
+      "default": "./dist/newsletter.js"
     }
   },
   "files": ["dist"],

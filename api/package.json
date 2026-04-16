@@ -2,7 +2,6 @@
   "name": "@pgconf/api",
   "version": "0.0.0",
   "private": true,
-  "type": "module",
   "main": "dist/contact/index.js",
   "scripts": {
     "build": "tsc",

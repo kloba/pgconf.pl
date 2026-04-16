@@ -1,11 +1,11 @@
 import { randomUUID } from 'node:crypto';
 import { type ContactSubmission, contactSubmission } from '@pgconf/contracts/contact';
-import { getClientIp } from '../lib/clientIp.js';
-import { getEnv } from '../lib/env.js';
-import { sendEmail } from '../lib/mailer.js';
-import { type FuncResponse, bad, ok } from '../lib/respond.js';
-import { getTable } from '../lib/tableStorage.js';
-import { verifyTurnstile } from '../lib/turnstile.js';
+import { getClientIp } from '../lib/clientIp';
+import { getEnv } from '../lib/env';
+import { sendEmail } from '../lib/mailer';
+import { type FuncResponse, bad, ok } from '../lib/respond';
+import { getTable } from '../lib/tableStorage';
+import { verifyTurnstile } from '../lib/turnstile';
 
 interface FuncContext {
   log: { error: (msg: unknown, ...args: unknown[]) => void };

@@ -1,3 +1,3 @@
-export * from './cfp.js';
-export * from './contact.js';
-export * from './newsletter.js';
+export * from './cfp';
+export * from './contact';
+export * from './newsletter';
