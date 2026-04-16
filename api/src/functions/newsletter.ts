@@ -1,4 +1,10 @@
-import { app, type HttpHandler, type HttpRequest, type HttpResponseInit, type InvocationContext } from '@azure/functions';
+import {
+  type HttpHandler,
+  type HttpRequest,
+  type HttpResponseInit,
+  type InvocationContext,
+  app,
+} from '@azure/functions';
 import { newsletterSubscription } from '@pgconf/contracts/newsletter';
 import { getClientIp } from '../lib/clientIp.js';
 import { getEnv } from '../lib/env.js';
@@ -9,18 +15,26 @@ import { verifyTurnstile } from '../lib/turnstile.js';
 const NEWSLETTER_TABLE = 'NewsletterOptins';
 const PARTITION = 'subscribers';
 
-async function callProvider(email: string, listId: string, apiKey: string, ctx: InvocationContext): Promise<void> {
+async function callProvider(
+  email: string,
+  listId: string,
+  apiKey: string,
+  ctx: InvocationContext,
+): Promise<void> {
   // Best-effort generic call. Individual provider (MailerLite / Listmonk / Resend Audiences)
   // can be swapped here without changing the handler shape.
   try {
-    const res = await fetch('https://api.resend.com/audiences/' + encodeURIComponent(listId) + '/contacts', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        'Content-Type': 'application/json',
+    const res = await fetch(
+      `https://api.resend.com/audiences/${encodeURIComponent(listId)}/contacts`,
+      {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, unsubscribed: false }),
       },
-      body: JSON.stringify({ email, unsubscribed: false }),
-    });
+    );
     if (!res.ok) {
       const text = await res.text().catch(() => '');
       ctx.warn(`newsletter provider call failed (${res.status}): ${text}`);

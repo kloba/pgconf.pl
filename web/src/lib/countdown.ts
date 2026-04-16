@@ -18,8 +18,8 @@ export function diff(target: Date, now: Date = new Date()): CountdownParts {
   }
   const seconds = Math.floor((totalMs / 1000) % 60);
   const minutes = Math.floor((totalMs / 1000 / 60) % 60);
-  const hours   = Math.floor((totalMs / 1000 / 60 / 60) % 24);
-  const days    = Math.floor(totalMs / 1000 / 60 / 60 / 24);
+  const hours = Math.floor((totalMs / 1000 / 60 / 60) % 24);
+  const days = Math.floor(totalMs / 1000 / 60 / 60 / 24);
   return { days, hours, minutes, seconds, totalMs, done: false };
 }
 
@@ -30,7 +30,7 @@ export function pad(n: number): string {
 /** Fraction of countdown remaining vs an "anchor" start point (used for the SVG arc). */
 export function progress(target: Date, anchor: Date, now: Date = new Date()): number {
   const total = target.getTime() - anchor.getTime();
-  const left  = target.getTime() - now.getTime();
+  const left = target.getTime() - now.getTime();
   if (total <= 0) return 0;
   return Math.max(0, Math.min(1, left / total));
 }

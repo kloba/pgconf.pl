@@ -18,7 +18,9 @@ interface TurnstileResponse {
 export async function verifyTurnstile(token: string, ip?: string): Promise<boolean> {
   const secret = getEnv('TURNSTILE_SECRET', false);
   if (!secret || secret === 'skip-in-dev') {
-    console.warn('[turnstile] TURNSTILE_SECRET missing or set to "skip-in-dev" — skipping verification');
+    console.warn(
+      '[turnstile] TURNSTILE_SECRET missing or set to "skip-in-dev" — skipping verification',
+    );
     return true;
   }
   if (!token) return false;

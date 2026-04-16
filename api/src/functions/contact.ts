@@ -1,6 +1,12 @@
 import { randomUUID } from 'node:crypto';
-import { app, type HttpHandler, type HttpRequest, type HttpResponseInit, type InvocationContext } from '@azure/functions';
-import { contactSubmission, type ContactSubmission } from '@pgconf/contracts/contact';
+import {
+  type HttpHandler,
+  type HttpRequest,
+  type HttpResponseInit,
+  type InvocationContext,
+  app,
+} from '@azure/functions';
+import { type ContactSubmission, contactSubmission } from '@pgconf/contracts/contact';
 import { getClientIp } from '../lib/clientIp.js';
 import { getEnv } from '../lib/env.js';
 import { sendEmail } from '../lib/mailer.js';
