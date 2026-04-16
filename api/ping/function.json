@@ -1,0 +1,18 @@
+{
+  "scriptFile": "../dist/ping/index.js",
+  "bindings": [
+    {
+      "type": "httpTrigger",
+      "direction": "in",
+      "name": "req",
+      "authLevel": "anonymous",
+      "methods": ["get", "post"],
+      "route": "ping"
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "res"
+    }
+  ]
+}

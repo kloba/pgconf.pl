@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "main": "dist/{cfp-submit,contact,newsletter}/index.js",
+  "main": "dist/contact/index.js",
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
