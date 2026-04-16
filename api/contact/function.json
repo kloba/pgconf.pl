@@ -1,0 +1,18 @@
+{
+  "scriptFile": "../dist/contact/index.js",
+  "bindings": [
+    {
+      "type": "httpTrigger",
+      "direction": "in",
+      "name": "req",
+      "authLevel": "anonymous",
+      "methods": ["post"],
+      "route": "contact"
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "res"
+    }
+  ]
+}

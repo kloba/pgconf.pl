@@ -14,5 +14,6 @@
     "outDir": "dist",
     "rootDir": "."
   },
-  "include": ["src/**/*"]
+  "include": ["lib/**/*", "cfp-submit/**/*.ts", "contact/**/*.ts", "newsletter/**/*.ts"],
+  "exclude": ["dist", "node_modules"]
 }

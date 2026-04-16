@@ -1,0 +1,18 @@
+{
+  "scriptFile": "../dist/newsletter/index.js",
+  "bindings": [
+    {
+      "type": "httpTrigger",
+      "direction": "in",
+      "name": "req",
+      "authLevel": "anonymous",
+      "methods": ["post"],
+      "route": "newsletter"
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "res"
+    }
+  ]
+}

@@ -1,5 +1,8 @@
 tsconfig.json
-src
+lib
+cfp-submit/index.ts
+contact/index.ts
+newsletter/index.ts
 *.ts
 .vscode
 local.settings.json

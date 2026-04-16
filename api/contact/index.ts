@@ -1,29 +1,32 @@
 import { randomUUID } from 'node:crypto';
-import {
-  type HttpHandler,
-  type HttpRequest,
-  type HttpResponseInit,
-  type InvocationContext,
-  app,
-} from '@azure/functions';
 import { type ContactSubmission, contactSubmission } from '@pgconf/contracts/contact';
 import { getClientIp } from '../lib/clientIp.js';
 import { getEnv } from '../lib/env.js';
 import { sendEmail } from '../lib/mailer.js';
-import { bad, ok } from '../lib/respond.js';
+import { type FuncResponse, bad, ok } from '../lib/respond.js';
 import { getTable } from '../lib/tableStorage.js';
 import { verifyTurnstile } from '../lib/turnstile.js';
 
+interface FuncContext {
+  log: { error: (msg: unknown, ...args: unknown[]) => void };
+  res?: FuncResponse;
+}
+
+interface FuncRequest {
+  headers: Record<string, string | string[] | undefined>;
+  body?: unknown;
+  rawBody?: string;
+}
+
 const CONTACT_TABLE = 'ContactMessages';
 
-function escapeHtml(input: string): string {
-  return input
+const escapeHtml = (input: string): string =>
+  input
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;');
-}
 
 function inboxHtml(submission: ContactSubmission, id: string): string {
   const rows: Array<[string, string]> = [
@@ -41,53 +44,59 @@ function inboxHtml(submission: ContactSubmission, id: string): string {
     )
     .join('');
   return `<!doctype html><html><body style="font-family:system-ui,sans-serif;color:#111;">
-  <h2>New contact message</h2>
-  <table cellpadding="0" cellspacing="0">${body}</table>
-  </body></html>`;
+<h2>New contact message</h2>
+<table cellpadding="0" cellspacing="0">${body}</table>
+</body></html>`;
 }
 
 const partitionForCategory = (category: string): string => `category:${category}`;
 
-const handler: HttpHandler = async (
-  req: HttpRequest,
-  ctx: InvocationContext,
-): Promise<HttpResponseInit> => {
+export default async function (context: FuncContext, req: FuncRequest): Promise<void> {
   try {
-    let json: unknown;
-    try {
-      json = await req.json();
-    } catch {
-      return bad(400, 'invalid_json');
+    let json: unknown = req.body;
+    if (typeof json === 'string') {
+      try {
+        json = JSON.parse(json);
+      } catch {
+        context.res = bad(400, 'invalid_json');
+        return;
+      }
     }
 
     const parsed = contactSubmission.safeParse(json);
     if (!parsed.success) {
-      return bad(400, 'validation');
+      context.res = bad(400, 'validation');
+      return;
     }
     const submission = parsed.data;
 
     const ip = getClientIp(req);
     const captchaOk = await verifyTurnstile(submission.turnstileToken, ip);
     if (!captchaOk) {
-      return bad(403, 'captcha');
+      context.res = bad(403, 'captcha');
+      return;
     }
 
     const id = randomUUID();
     const submittedAt = new Date().toISOString();
 
-    const table = await getTable(CONTACT_TABLE);
-    await table.createEntity({
-      partitionKey: partitionForCategory(submission.category),
-      rowKey: id,
-      name: submission.name,
-      email: submission.email,
-      organisation: submission.organisation ?? '',
-      category: submission.category,
-      subject: submission.subject,
-      message: submission.message,
-      submittedAt,
-      ip,
-    });
+    try {
+      const table = await getTable(CONTACT_TABLE);
+      await table.createEntity({
+        partitionKey: partitionForCategory(submission.category),
+        rowKey: id,
+        name: submission.name,
+        email: submission.email,
+        organisation: submission.organisation ?? '',
+        category: submission.category,
+        subject: submission.subject,
+        message: submission.message,
+        submittedAt,
+        ip,
+      });
+    } catch (err) {
+      context.log.error('contact table write failed', err);
+    }
 
     const inbox = getEnv('CONTACT_INBOX', false) ?? 'hello@pgconf.pl';
 
@@ -96,18 +105,11 @@ const handler: HttpHandler = async (
       subject: `[contact:${submission.category}] ${submission.subject}`,
       html: inboxHtml(submission, id),
       replyTo: submission.email,
-    }).catch((err) => ctx.error('contact mail failed', err));
+    }).catch((err) => context.log.error('contact mail failed', err));
 
-    return ok({});
+    context.res = ok({});
   } catch (err) {
-    ctx.error(err);
-    return bad(500, 'internal');
+    context.log.error(err);
+    context.res = bad(500, 'internal');
   }
-};
-
-app.http('contact', {
-  route: 'contact',
-  methods: ['POST'],
-  authLevel: 'anonymous',
-  handler,
-});
+}
