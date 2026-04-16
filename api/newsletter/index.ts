@@ -1,4 +1,4 @@
-import { newsletterSubscription } from '@pgconf/contracts/newsletter';
+import { newsletterSubscription } from '../lib/contracts/newsletter';
 import { getClientIp } from '../lib/clientIp';
 import { getEnv } from '../lib/env';
 import { type FuncResponse, bad, ok } from '../lib/respond';

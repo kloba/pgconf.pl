@@ -1,5 +1,5 @@
 import { randomUUID } from 'node:crypto';
-import { type ContactSubmission, contactSubmission } from '@pgconf/contracts/contact';
+import { type ContactSubmission, contactSubmission } from '../lib/contracts/contact';
 import { getClientIp } from '../lib/clientIp';
 import { getEnv } from '../lib/env';
 import { sendEmail } from '../lib/mailer';

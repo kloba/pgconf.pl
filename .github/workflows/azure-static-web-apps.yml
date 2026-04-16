@@ -36,8 +36,12 @@ jobs:
       - name: Build (contracts, web, api)
         run: pnpm build
 
-      - name: Bundle API with deps (resolves workspace deps)
-        run: pnpm deploy --filter @pgconf/api --prod ./api-deploy
+      - name: Bundle API with flat npm node_modules
+        run: |
+          rm -rf api-deploy
+          mkdir -p api-deploy
+          cp -R api/host.json api/package.json api/dist api/cfp-submit api/contact api/newsletter api/ping api-deploy/
+          cd api-deploy && npm install --omit=dev --no-audit --no-fund
 
       - name: Deploy to Azure Static Web Apps
         uses: Azure/static-web-apps-deploy@v1
