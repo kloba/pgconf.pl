@@ -1,5 +1,5 @@
-import { newsletterSubscription } from '../lib/contracts/newsletter';
 import { getClientIp } from '../lib/clientIp';
+import { newsletterSubscription } from '../lib/contracts/newsletter';
 import { getEnv } from '../lib/env';
 import { type FuncResponse, bad, ok } from '../lib/respond';
 import { getTable } from '../lib/tableStorage';

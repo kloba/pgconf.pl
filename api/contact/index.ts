@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto';
-import { type ContactSubmission, contactSubmission } from '../lib/contracts/contact';
 import { getClientIp } from '../lib/clientIp';
+import { type ContactSubmission, contactSubmission } from '../lib/contracts/contact';
 import { getEnv } from '../lib/env';
 import { sendEmail } from '../lib/mailer';
 import { type FuncResponse, bad, ok } from '../lib/respond';

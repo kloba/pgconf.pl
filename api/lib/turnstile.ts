@@ -6,7 +6,6 @@
 export async function verifyTurnstile(token: string, ip?: string): Promise<boolean> {
   const secret = process.env.TURNSTILE_SECRET;
   if (!secret || secret === 'skip-in-dev') {
-    // biome-ignore lint/suspicious/noConsole: dev-mode warn
     console.warn('TURNSTILE_SECRET not configured; bypassing CAPTCHA');
     return true;
   }

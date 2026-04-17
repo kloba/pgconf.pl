@@ -12,7 +12,6 @@ interface MailerProvider {
 
 class ConsoleProvider implements MailerProvider {
   async send(args: SendArgs): Promise<void> {
-    // biome-ignore lint/suspicious/noConsole: stub for local dev
     console.log('[mailer:console]', JSON.stringify({ to: args.to, subject: args.subject }));
   }
 }

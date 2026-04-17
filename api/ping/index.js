@@ -1,4 +1,4 @@
-module.exports = async function (context) {
+module.exports = async (context) => {
   context.log('ping invoked');
   context.res = {
     status: 200,
